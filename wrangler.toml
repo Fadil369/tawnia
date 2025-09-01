@@ -1,88 +1,12 @@
-#:schema node_modules/wrangler/config-schema.json
 name = "tawnia-healthcare-analytics"
-main = "src/worker.js"
 compatibility_date = "2024-09-01"
-compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "public"
 
-[env.production]
-name = "tawnia-healthcare-analytics-prod"
-routes = [
-  { pattern = "analytics.tawnia.com/*", zone_name = "tawnia.com" }
-]
-vars = { ENVIRONMENT = "production", DEBUG = "false", ENABLE_CACHING = "true" }
-
-[env.staging]
-name = "tawnia-healthcare-analytics-staging"
-vars = { ENVIRONMENT = "staging", DEBUG = "true", ENABLE_CACHING = "false" }
-
-[env.development]
-name = "tawnia-healthcare-analytics-dev"
-vars = { ENVIRONMENT = "development", DEBUG = "true", LOG_LEVEL = "DEBUG" }
-
-# Container service binding for Python FastAPI backend
-[[services]]
-binding = "BACKEND"
-service = "tawnia-backend-container"
-
-# KV namespaces for caching
-[[kv_namespaces]]
-binding = "ANALYTICS_DATA"
-id = "your-kv-namespace-id"
-preview_id = "your-preview-kv-namespace-id"
-
-[[kv_namespaces]]
-binding = "CACHE_KV"
-id = "your-cache-kv-namespace-id"
-
-# R2 buckets for file storage
-[[r2_buckets]]
-binding = "FILE_STORAGE"
-bucket_name = "tawnia-analytics-files"
-
-[[r2_buckets]]
-binding = "UPLOADS_BUCKET"
-bucket_name = "tawnia-uploads"
-
-[[r2_buckets]]
-binding = "REPORTS_BUCKET"
-bucket_name = "tawnia-reports"
-
-# Durable Objects for session management
-[[durable_objects.bindings]]
-name = "SESSION_MANAGER"
-class_name = "SessionManager"
-
-[[migrations]]
-tag = "v1"
-new_classes = ["SessionManager"]
-
-# Analytics Engine
-[analytics_engine_datasets]
-binding = "ANALYTICS"
-
-# Global variables
-[vars]
-ENVIRONMENT = "production"
-API_VERSION = "v2"
-MAX_FILE_SIZE = "104857600"
-ENABLE_AI_INSIGHTS = "true"
-ENABLE_CIRCUIT_BREAKER = "true"
-LOG_LEVEL = "INFO"
-
-# Build configuration
 [build]
 command = "npm run build"
-cwd = "."
-watch_dir = "src"
 
 [build.upload]
-format = "service-worker"
+format = "modules"
 
-# Performance limits
-[limits]
-cpu_ms = 30000
-
-# Pages configuration for frontend
-[pages_config]
-pages_build_output_dir = "public"
+[[pages_config]]
 production_branch = "main"
