@@ -75,7 +75,7 @@ aioredis==2.0.1
 
 # Report Generation
 reportlab==4.2.2
-matplotlib==3.9.0
+matplotlib==3.9.4
 seaborn==0.13.2
 plotly==5.22.0
 

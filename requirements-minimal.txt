@@ -48,7 +48,7 @@ aiofiles==23.2.1
 
 # Report Generation
 reportlab==4.0.7
-matplotlib==3.8.2
+matplotlib==3.9.4
 plotly==5.17.0
 
 # Excel/CSV Processing
