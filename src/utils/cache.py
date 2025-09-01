@@ -3,7 +3,6 @@ Advanced caching system for improved performance
 """
 
 import json
-import pickle
 import hashlib
 import time
 from typing import Any, Optional, Dict, List
@@ -140,7 +139,8 @@ class FileCache:
         if not safe_key:
             safe_key = 'default'
         
-        key_hash = hashlib.md5(safe_key.encode()).hexdigest()
+        # Use SHA-256 instead of MD5 for security (CWE-327 fix)
+        key_hash = hashlib.sha256(safe_key.encode()).hexdigest()
         cache_path = self.cache_dir / f"{key_hash}.cache"
         
         # Ensure the resolved path is within cache directory
@@ -158,8 +158,9 @@ class FileCache:
 
         try:
             async with self._lock:
-                with open(cache_path, 'rb') as f:
-                    entry_data = pickle.load(f)
+                # Use JSON instead of pickle for security (CWE-502 fix)
+                with open(cache_path, 'r', encoding='utf-8') as f:
+                    entry_data = json.load(f)
 
                 entry = CacheEntry(
                     entry_data['value'],
@@ -198,8 +199,15 @@ class FileCache:
 
         try:
             async with self._lock:
-                with open(cache_path, 'wb') as f:
-                    pickle.dump(entry_data, f)
+                # Use JSON instead of pickle for security (CWE-502 fix)
+                def default_serializer(obj):
+                    """Custom JSON serializer for complex objects"""
+                    if hasattr(obj, '__dict__'):
+                        return {'__type__': obj.__class__.__name__, '__data__': obj.__dict__}
+                    return str(obj)
+                
+                with open(cache_path, 'w', encoding='utf-8') as f:
+                    json.dump(entry_data, f, default=default_serializer, indent=2)
                 # Sanitize key for logging
                 safe_key = ''.join(c for c in key if ord(c) >= 32 or c in ' \t')[:50]
                 logger.debug(f"File cache entry set: {safe_key}")
@@ -306,7 +314,8 @@ def cache_result(cache_instance: MultiLevelCache, ttl: Optional[float] = None):
                 'args': args,
                 'kwargs': kwargs
             }
-            cache_key = hashlib.md5(
+            # Use SHA-256 instead of MD5 for security (CWE-327 fix)
+            cache_key = hashlib.sha256(
                 json.dumps(key_data, sort_keys=True, default=str).encode()
             ).hexdigest()
 

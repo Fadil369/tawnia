@@ -25,6 +25,8 @@ from src.ai.insights_generator import InsightsGenerator
 from src.reports.report_generator import ReportGenerator
 from src.utils.logger import setup_logger
 from src.utils.config import get_settings
+from src.security.security_config import get_security_config
+from src.security.middleware import SecurityMiddleware, JWTAuthenticationMiddleware
 from src.models.schemas import (
     UploadResponse, AnalysisRequest, AnalysisResponse,
     InsightsRequest, InsightsResponse, ReportRequest, ReportResponse
@@ -33,8 +35,9 @@ from src.models.schemas import (
 # Initialize logger
 logger = setup_logger(__name__)
 
-# Get configuration
+# Get configuration and security settings
 settings = get_settings()
+security_config = get_security_config(settings.environment)
 
 # Create directories
 UPLOAD_DIR = Path("uploads")
@@ -65,31 +68,45 @@ async def lifespan(app: FastAPI):
     yield
     logger.info("Shutting down Tawnia Healthcare Analytics System")
 
-# Create FastAPI app
+# Create FastAPI app with enhanced security
 app = FastAPI(
     title="Tawnia Healthcare Analytics API",
-    description="Advanced healthcare insurance data analysis platform",
+    description="Advanced healthcare insurance data analysis platform with comprehensive security",
     version="2.0.0",
-    docs_url="/docs",
-    redoc_url="/redoc",
+    docs_url="/docs" if settings.environment != "production" else None,
+    redoc_url="/redoc" if settings.environment != "production" else None,
     lifespan=lifespan
 )
 
-# Add middleware
+# Add Security Middleware (FIRST - most important)
+app.add_middleware(SecurityMiddleware, config=security_config)
+
+# Add CORS middleware with security-conscious configuration
+cors_origins = security_config.network_security.cors_origins
+if settings.environment == "development":
+    cors_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=cors_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=security_config.network_security.cors_methods,
+    allow_headers=security_config.network_security.cors_headers,
 )
+
+# Trusted host middleware with security configuration
+allowed_hosts = ["localhost", "127.0.0.1"]
+if settings.environment == "production":
+    # Add production domains here
+    allowed_hosts.extend(["yourdomain.com", "www.yourdomain.com"])
 
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=["*"]  # Configure appropriately for production
+    allowed_hosts=allowed_hosts
 )
 
-# Security
+# Enhanced Security and Authentication
+jwt_auth = JWTAuthenticationMiddleware(security_config)
 security = HTTPBearer(auto_error=False)
 
 # Static files
