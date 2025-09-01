@@ -142,10 +142,14 @@ async function handleAPIRequest(request: Request, env: Env, ctx: ExecutionContex
     );
   }
 
-  // Update rate limit counter
+  // Update rate limit counter with proper increment logic
   if (env.ENABLE_CIRCUIT_BREAKER === 'true') {
     ctx.waitUntil(
-      env.CACHE_KV.put(rateLimitKey, '1', { expirationTtl: 60 })
+      (async () => {
+        const currentCount = await env.CACHE_KV.get(rateLimitKey);
+        const newCount = currentCount ? parseInt(currentCount) + 1 : 1;
+        await env.CACHE_KV.put(rateLimitKey, newCount.toString(), { expirationTtl: 60 });
+      })()
     );
   }
 

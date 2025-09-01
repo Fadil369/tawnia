@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
 const analysisEngine = require('../analysis/analysisEngine');
+const PathValidator = require('../utils/path_validator');
 
 const router = express.Router();
 
@@ -20,8 +21,9 @@ router.post('/rejections', async (req, res) => {
       });
     }
 
-    // Load processed data
-    const dataPath = path.join(__dirname, '../../data', `${resultId}.json`);
+    // Create safe data path with validation
+    const dataDir = path.join(__dirname, '../../data');
+    const dataPath = PathValidator.createSafeDataPath(dataDir, resultId);
 
     try {
       const rawData = await fs.readFile(dataPath, 'utf8');

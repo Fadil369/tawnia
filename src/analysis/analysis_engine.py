@@ -26,6 +26,7 @@ from statsmodels.tsa.arima.model import ARIMA
 from ..utils.logger import setup_logger
 from ..processors.excel_processor import ExcelProcessor
 from ..models.schemas import AnalysisResult, TrendAnalysis, QualityMetrics, StatisticalMetrics
+from ..utils.log_sanitizer import LogSanitizer, safe_log_error, safe_log_info
 
 logger = setup_logger(__name__)
 
@@ -241,7 +242,7 @@ class AnalysisEngine:
             )
 
         except Exception as e:
-            logger.error(f"Error in pattern analysis: {str(e)}")
+            safe_log_error(logger, f"Error in pattern analysis: {str(e)}")
             raise
 
     async def analyze_quality(self, file_ids: List[str]) -> AnalysisResult:

@@ -14,7 +14,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from contextlib import asynccontextmanager
 from typing import List, Optional, Dict, Any
 import asyncio
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 
@@ -101,7 +101,7 @@ async def health_check():
     """Health check endpoint"""
     return {
         "status": "healthy",
-        "timestamp": datetime.now().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": "2.0.0",
         "environment": settings.environment,
         "components": {
@@ -134,8 +134,15 @@ async def upload_single_file(file: UploadFile = File(...)):
         if not file.filename.lower().endswith(('.xlsx', '.xls', '.csv')):
             raise HTTPException(status_code=400, detail="Only Excel (.xlsx, .xls) and CSV files are supported")
 
-        # Save uploaded file
-        file_path = UPLOAD_DIR / file.filename
+        # Validate and sanitize filename to prevent path traversal
+        from src.utils.security import InputSanitizer
+        safe_filename = InputSanitizer.sanitize_filename(file.filename)
+        
+        # Save uploaded file with validated path
+        file_path = UPLOAD_DIR / safe_filename
+        # Ensure the resolved path is within UPLOAD_DIR
+        if not str(file_path.resolve()).startswith(str(UPLOAD_DIR.resolve())):
+            raise HTTPException(status_code=400, detail="Invalid file path")
         with open(file_path, "wb") as buffer:
             content = await file.read()
             buffer.write(content)
@@ -189,7 +196,7 @@ async def analyze_rejections(request: AnalysisRequest):
             success=True,
             analysis_type="rejections",
             results=result,
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error in rejection analysis: {str(e)}")
@@ -204,7 +211,7 @@ async def analyze_trends(request: AnalysisRequest):
             success=True,
             analysis_type="trends",
             results=result,
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error in trend analysis: {str(e)}")
@@ -219,7 +226,7 @@ async def analyze_patterns(request: AnalysisRequest):
             success=True,
             analysis_type="patterns",
             results=result,
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error in pattern analysis: {str(e)}")
@@ -234,7 +241,7 @@ async def analyze_quality(request: AnalysisRequest):
             success=True,
             analysis_type="quality",
             results=result,
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error in quality analysis: {str(e)}")
@@ -252,7 +259,7 @@ async def analyze_comparison(request: AnalysisRequest):
             success=True,
             analysis_type="comparison",
             results=result,
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error in comparison analysis: {str(e)}")
@@ -274,7 +281,7 @@ async def generate_insights(request: InsightsRequest):
             recommendations=result["recommendations"],
             confidence_score=result["confidence_score"],
             source=result["source"],
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error generating insights: {str(e)}")
@@ -297,7 +304,7 @@ async def generate_report(request: ReportRequest):
             filename=result["filename"],
             format=request.format,
             download_url=f"/api/reports/download/{result['report_id']}",
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now(timezone.utc).isoformat()
         )
     except Exception as e:
         logger.error(f"Error generating report: {str(e)}")

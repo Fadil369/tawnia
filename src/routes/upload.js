@@ -4,6 +4,8 @@ const path = require('path');
 const fs = require('fs').promises;
 const uuid = require('uuid');
 const excelProcessor = require('../processors/excelProcessor');
+const { verifyToken, requireRole, createRateLimit } = require('../middleware/auth');
+const PathValidator = require('../utils/path_validator');
 
 const router = express.Router();
 
@@ -335,8 +337,8 @@ router.get('/list', async (req, res) => {
   }
 });
 
-// Delete processed result endpoint
-router.delete('/results/:resultId', async (req, res) => {
+// Delete processed result endpoint (requires admin role)
+router.delete('/results/:resultId', verifyToken, requireRole(['admin']), async (req, res) => {
   try {
     const { resultId } = req.params;
     const resultPath = path.join(__dirname, '../../data', `${resultId}.json`);

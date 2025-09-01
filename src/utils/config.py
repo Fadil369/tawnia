@@ -221,11 +221,13 @@ class Settings(BaseSettings):
     # System information
     python_version: str = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 
+    # Class-level constants for better performance
+    VALID_ENVIRONMENTS = ['development', 'testing', 'staging', 'production']
+    
     @validator('environment')
     def validate_environment(cls, v):
-        valid_envs = ['development', 'testing', 'staging', 'production']
-        if v not in valid_envs:
-            raise ValueError(f'Environment must be one of: {valid_envs}')
+        if v not in cls.VALID_ENVIRONMENTS:
+            raise ValueError(f'Environment must be one of: {cls.VALID_ENVIRONMENTS}')
         return v
 
     @property

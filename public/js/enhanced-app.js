@@ -131,6 +131,11 @@ class TawniaAnalyzer {
         
         if (!newTab || newTab.classList.contains('active')) return;
         
+        // Null check for newTab before accessing properties
+        if (newTab) {
+            newTab.classList.add('active');
+        }
+        
         // Add loading state
         this.setTabLoading(tabName, true);
         
@@ -406,6 +411,15 @@ class TawniaAnalyzer {
     }
 
     /**
+     * Sanitize HTML to prevent XSS attacks
+     */
+    sanitizeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /**
      * Enhanced notification system with rich interactions
      */
     showNotification(message, type = 'info', duration = 4000, actions = []) {
@@ -482,7 +496,7 @@ class TawniaAnalyzer {
                     <i class="${icons[type]}" style="font-size: 1.3rem; filter: drop-shadow(0 0 8px currentColor);"></i>
                 </div>
                 <div style="flex: 1;">
-                    <div style="font-size: 0.95rem; line-height: 1.5;">${message}</div>
+                    <div style="font-size: 0.95rem; line-height: 1.5;">${this.sanitizeHTML(message)}</div>
                     ${actionsHtml}
                 </div>
                 <button onclick="analyzer.dismissNotification(${notificationId})" 
@@ -535,8 +549,9 @@ class TawniaAnalyzer {
     }
 
     repositionNotifications() {
+        const NOTIFICATION_SPACING = 90;
         this.notifications.forEach((notification, index) => {
-            notification.element.style.top = `${20 + (index * 90)}px`;
+            notification.element.style.top = `${20 + (index * NOTIFICATION_SPACING)}px`;
         });
     }
 
@@ -821,7 +836,7 @@ class TawniaAnalyzer {
     }
 
     startHealthCheck() {
-        setInterval(async () => {
+        this.healthCheckInterval = setInterval(async () => {
             try {
                 const response = await fetch('/health');
                 if (!response.ok) {
@@ -831,6 +846,13 @@ class TawniaAnalyzer {
                 console.warn('Health check failed:', error);
             }
         }, 60000);
+    }
+
+    stopHealthCheck() {
+        if (this.healthCheckInterval) {
+            clearInterval(this.healthCheckInterval);
+            this.healthCheckInterval = null;
+        }
     }
 
     trackEvent(eventName, properties = {}) {
