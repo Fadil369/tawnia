@@ -1,0 +1,50 @@
+{
+  "name": "tawnia-healthcare-analytics",
+  "version": "2.0.0",
+  "description": "AI-powered healthcare insurance data analysis platform",
+  "main": "main.py",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "webpack --mode production",
+    "build:backend": "echo 'Backend build complete'",
+    "deploy": "npm run build && npm run deploy:cloudflare",
+    "deploy:cloudflare": "wrangler publish"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5",
+    "compression": "^1.7.4",
+    "winston": "^3.11.0",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1",
+    "xlsx": "^0.18.5",
+    "csv-parser": "^3.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "wrangler": "^3.22.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "healthcare",
+    "analytics",
+    "insurance",
+    "ai",
+    "data-analysis"
+  ],
+  "author": "Tawnia Healthcare Analytics",
+  "license": "MIT"
+}

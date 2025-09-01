@@ -1,0 +1,80 @@
+{
+  "test_suite": "Enhanced Tawnia Healthcare Analytics",
+  "timestamp": 1756715388.296516,
+  "total_tests": 12,
+  "passed": 1,
+  "failed": 11,
+  "results": [
+    {
+      "category": "Health Check",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715363.1215959
+    },
+    {
+      "category": "Security",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715365.4392211
+    },
+    {
+      "category": "File Upload & Validation",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715368.6535795
+    },
+    {
+      "category": "Performance Monitoring",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715370.9362304
+    },
+    {
+      "category": "Caching System",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715373.4680924
+    },
+    {
+      "category": "Circuit Breaker",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715375.753519
+    },
+    {
+      "category": "Analytics Engine",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715378.3284812
+    },
+    {
+      "category": "AI Insights",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715381.1183093
+    },
+    {
+      "category": "Report Generation",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715383.7340431
+    },
+    {
+      "category": "Error Handling",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715386.0211337
+    },
+    {
+      "category": "Metrics Collection",
+      "status": "FAILED",
+      "error": "All connection attempts failed",
+      "timestamp": 1756715388.2944582
+    },
+    {
+      "category": "Cleanup",
+      "status": "PASSED",
+      "timestamp": 1756715388.296516
+    }
+  ]
+}

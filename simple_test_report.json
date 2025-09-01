@@ -1,0 +1,14 @@
+{
+  "total_tests": 6,
+  "passed": 3,
+  "failed": 3,
+  "success_rate": 50.0,
+  "results": {
+    "Basic Imports": "FAILED",
+    "Data Processing": "PASSED",
+    "Cache Functionality": "FAILED",
+    "Input Sanitization": "FAILED",
+    "File Operations": "PASSED",
+    "Analysis Basics": "PASSED"
+  }
+}

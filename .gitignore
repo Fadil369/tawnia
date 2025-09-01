@@ -1,0 +1,16 @@
+node_modules/
+venv/
+*.log
+.env
+.DS_Store
+dist/
+build/
+coverage/
+.nyc_output/
+*.pyc
+__pycache__/
+.pytest_cache/
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tawnia Healthcare Analytics - AI-Powered Insurance Data Platform</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Advanced AI-powered healthcare insurance data analysis platform with real-time insights and comprehensive reporting.">
+    <meta name="keywords" content="healthcare, insurance, analytics, AI, data analysis, claims processing">
+    <meta name="author" content="Tawnia Healthcare Analytics">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- External CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Enhanced Color Palette */
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --success-light: #34d399;
+            --warning-color: #f59e0b;
+            --warning-light: #fbbf24;
+            --danger-color: #ef4444;
+            --danger-light: #f87171;
+            --info-color: #06b6d4;
+            --info-light: #22d3ee;
+            
+            /* Advanced Background System */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #1a1f2e;
+            --bg-tertiary: #2d3748;
+            --bg-card: linear-gradient(145deg, #1a1f2e 0%, #2d3748 100%);
+            --bg-glass: rgba(26, 31, 46, 0.8);
+            --bg-input: #374151;
+            --bg-hover: rgba(59, 130, 246, 0.1);
+            
+            /* Typography */
+            --text-primary: #f8fafc;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: #60a5fa;
+            
+            /* Borders & Dividers */
+            --border-color: rgba(148, 163, 184, 0.2);
+            --border-light: rgba(148, 163, 184, 0.1);
+            --border-accent: rgba(59, 130, 246, 0.3);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+            --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+            
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(ellipse at top, #1a1f2e 0%, #0a0e1a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+        
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Enhanced Header */
+        .header {
+            background: rgba(26, 31, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-accent);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-xl);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all var(--transition-normal);
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-primary);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-size: 0.875rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow), var(--shadow-xl);
+            filter: brightness(1.1);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-accent);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Enhanced Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            padding: 0.5rem;
+            border-radius: var(--radius-xl);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-accent);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-primary);
+            opacity: 0.5;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: all var(--transition-normal);
+            transform: translateX(-50%);
+        }
+
+        .tab-button.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-1px);
+        }
+        
+        .tab-button.active::before {
+            width: 80%;
+        }
+        
+        .tab-button.active i {
+            animation: bounce 0.6s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 60%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-3px); }
+            80% { transform: translateY(-1px); }
+        }
+
+        .tab-button:hover:not(.active) {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+        
+        .tab-button:hover:not(.active)::before {
+            width: 60%;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Upload Section */
+        .upload-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-2xl);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-primary);
+            opacity: 0.6;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-accent);
+            border-radius: var(--radius-xl);
+            padding: 4rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            transition: all var(--transition-slow);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .upload-area:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .upload-area.dragover {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+            animation: dragPulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes dragPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.5); }
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .upload-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .upload-subtext {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Enhanced Progress Bar */
+        .progress-container {
+            margin-top: 1.5rem;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-inner);
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-glass);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Enhanced Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-glass);
+        }
+
+        .card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-glow), var(--shadow-xl);
+            border-color: var(--primary-light);
+        }
+        
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-glass);
+            opacity: 0.5;
+        }
+
+        .card-icon.primary {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+        }
+
+        .card-icon.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .card-icon.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .card-icon.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+        }
+
+        .metric {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            animation: countUp 1s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Data Table */
+        .data-table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .table-header {
+            background: var(--bg-tertiary);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .table-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            color: var(--text-primary);
+            position: sticky;
+            top: 0;
+        }
+
+        .data-table tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .chart-canvas {
+            max-height: 400px;
+        }
+
+        /* Status Indicators */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .status.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .status.info {
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--info-color);
+        }
+
+        /* Enhanced Loading States */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            gap: 1rem;
+            flex-direction: column;
+        }
+
+        .spinner {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+        
+        .spinner::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--success-color);
+            border-radius: 50%;
+            animation: spin 2s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .tab-navigation {
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+            
+            .tab-button {
+                flex: 1 1 calc(50% - 0.125rem);
+                min-width: 120px;
+                padding: 0.75rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+            
+            .upload-icon {
+                font-size: 3rem;
+            }
+            
+            .metric {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tab-button {
+                flex: 1 1 100%;
+                margin-bottom: 0.25rem;
+            }
+            
+            .upload-area {
+                padding: 1.5rem 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Enhanced Utility Classes */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        
+        .hidden { display: none !important; }
+        .visible { display: block !important; }
+        
+        .fade-in { animation: fadeIn 0.5s ease; }
+        .slide-up { animation: slideUp 0.5s ease; }
+        .scale-in { animation: scaleIn 0.3s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Spacing utilities */
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        
+        /* Glass morphism utilities */
+        .glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-accent);
+        }
+        
+        .glow {
+            box-shadow: var(--shadow-glow);
+        }
+        
+        /* Interactive states */
+        .interactive {
+            transition: all var(--transition-normal);
+            cursor: pointer;
+        }
+        
+        .interactive:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Status indicators */
+        .status-online {
+            position: relative;
+        }
+        
+        .status-online::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: var(--success-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Tawnia Analytics</span>
+                    <div style="font-size: 0.7rem; font-weight: 400; color: var(--text-muted); margin-left: 0.5rem;">v2.0</div>
+                </div>
+                <div class="header-actions">
+                    <div class="status-indicator" style="display: flex; align-items: center; gap: 0.5rem; margin-right: 1rem;">
+                        <div class="status-dot" style="width: 8px; height: 8px; background: var(--success-color); border-radius: 50%; animation: pulse 2s infinite;"></div>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">System Online</span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="downloadTemplate()">
+                        <i class="fas fa-download"></i>
+                        Template
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleTheme()">
+                        <i class="fas fa-moon"></i>
+                        Theme
+                    </button>
+                    <button class="btn btn-primary" onclick="showHelp()">
+                        <i class="fas fa-question-circle"></i>
+                        Help
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Tab Navigation -->
+            <nav class="tab-navigation">
+                <button class="tab-button active" data-tab="upload">
+                    <i class="fas fa-upload"></i>
+                    File Upload
+                </button>
+                <button class="tab-button" data-tab="analyze">
+                    <i class="fas fa-chart-line"></i>
+                    Analysis
+                </button>
+                <button class="tab-button" data-tab="insights">
+                    <i class="fas fa-lightbulb"></i>
+                    AI Insights
+                </button>
+                <button class="tab-button" data-tab="reports">
+                    <i class="fas fa-file-alt"></i>
+                    Reports
+                </button>
+                <button class="tab-button" data-tab="history">
+                    <i class="fas fa-history"></i>
+                    History
+                </button>
+            </nav>
+
+            <!-- Upload Tab -->
+            <div id="upload-tab" class="tab-content active">
+                <div class="upload-section">
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-text">
+                            Drop your files here or click to browse
+                        </div>
+                        <div class="upload-subtext">
+                            Supports: Excel (.xlsx, .xls), CSV, JSON • Max 100MB per file • Up to 10 files
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                            💡 Pro tip: Use Ctrl+U to quick upload or paste files directly
+                        </div>
+                        <input type="file" id="fileInput" class="file-input" multiple accept=".xlsx,.xls,.csv">
+                    </div>
+
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Uploading...</div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="cards-grid" id="quickStats">
+                    <div class="card interactive">
+                        <div class="card-header">
+                            <div class="card-icon primary">
+                                <i class="fas fa-file-excel"></i>
+                            </div>
+                            <div>
+                                <div class="card-title">Files Processed</div>
+                                <div class="card-subtitle">Total processed files</div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric" id="totalFiles">0</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
+                                <i class="fas fa-clock"></i> Last updated: <span id="lastUpdate">Never</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card interactive">
+                        <div class="card-header">
+                            <div class="card-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div>
+                                <div class="card-title">Success Rate</div>
+                                <div class="card-subtitle">Processing success rate</div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric" id="successRate">0%</div>
+                            <div style="width: 100%; height: 4px; background: var(--bg-tertiary); border-radius: 2px; margin-top: 0.5rem; overflow: hidden;">
+                                <div id="successRateBar" style="height: 100%; background: var(--gradient-success); width: 0%; transition: width 1s ease;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card interactive">
+                        <div class="card-header">
+                            <div class="card-icon warning">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div>
+                                <div class="card-title">Data Quality</div>
+                                <div class="card-subtitle">Average data quality score</div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric" id="dataQuality">N/A</div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                <div style="flex: 1; height: 4px; background: var(--bg-tertiary); border-radius: 2px; overflow: hidden;">
+                                    <div id="qualityBar" style="height: 100%; background: var(--gradient-warning); width: 0%; transition: width 1s ease;"></div>
+                                </div>
+                                <span id="qualityStatus" style="font-size: 0.7rem; color: var(--text-muted);">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div id="analyze-tab" class="tab-content">
+                <div class="loading" id="analysisLoading">
+                    <div class="spinner"></div>
+                    <span>Loading analysis data...</span>
+                </div>
+
+                <div id="analysisContent" class="hidden">
+                    <!-- Analysis Action Buttons -->
+                    <div class="action-buttons-grid">
+                        <button class="btn btn-primary" onclick="runSelectedAnalysis('rejections')">
+                            <i class="fas fa-chart-bar"></i>
+                            Analyze Rejections
+                        </button>
+                        <button class="btn btn-primary" onclick="runSelectedAnalysis('trends')">
+                            <i class="fas fa-chart-line"></i>
+                            Analyze Trends
+                        </button>
+                        <button class="btn btn-primary" onclick="runSelectedAnalysis('patterns')">
+                            <i class="fas fa-search"></i>
+                            Find Patterns
+                        </button>
+                        <button class="btn btn-success" onclick="runSelectedAnalysis('insights')">
+                            <i class="fas fa-brain"></i>
+                            Generate AI Insights
+                        </button>
+                    </div>
+
+                    <!-- Analysis Results Container -->
+                    <div id="analysisResults" class="analysis-results"></div>
+
+                    <!-- Charts Container -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">Claim Rejection Analysis</div>
+                            <button class="btn btn-secondary" onclick="refreshChart('rejectionChart')">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                        <canvas id="rejectionChart" class="chart-canvas"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">Monthly Trends</div>
+                            <button class="btn btn-secondary" onclick="refreshChart('trendsChart')">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                        <canvas id="trendsChart" class="chart-canvas"></canvas>
+                    </div>
+
+                    <!-- Analysis Summary -->
+                    <div class="cards-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon danger">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Rejection Rate</div>
+                                    <div class="card-subtitle">Overall claim rejection rate</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="metric" id="rejectionRate">N/A</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon info">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div>
+                                    <div class="card-title">Top Rejection Reason</div>
+                                    <div class="card-subtitle">Most common rejection cause</div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="topRejectionReason">No data available</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights Tab -->
+            <div id="insights-tab" class="tab-content">
+                <div class="loading" id="insightsLoading">
+                    <div class="spinner"></div>
+                    <span>Generating AI insights...</span>
+                </div>
+
+                <div id="insightsContent" class="hidden">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon primary">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div>
+                                <div class="card-title">AI-Powered Analysis</div>
+                                <div class="card-subtitle">Intelligent insights and recommendations</div>
+                            </div>
+                        </div>
+                        <div class="card-content" id="aiInsightsContent">
+                            <!-- AI insights will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon success">
+                            <i class="fas fa-file-download"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Generate Reports</div>
+                            <div class="card-subtitle">Export analysis results in various formats</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="cards-grid">
+                            <button class="btn btn-primary" onclick="generateReport('excel')">
+                                <i class="fas fa-file-excel"></i>
+                                Excel Report
+                            </button>
+                            <button class="btn btn-primary" onclick="generateReport('pdf')">
+                                <i class="fas fa-file-pdf"></i>
+                                PDF Report
+                            </button>
+                            <button class="btn btn-primary" onclick="generateReport('csv')">
+                                <i class="fas fa-file-csv"></i>
+                                CSV Export
+                            </button>
+                            <button class="btn btn-primary" onclick="generateReport('json')">
+                                <i class="fas fa-file-code"></i>
+                                JSON Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generated Reports List -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon info">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Generated Reports</div>
+                            <div class="card-subtitle">Download or manage your reports</div>
+                        </div>
+                        <button class="btn btn-secondary" onclick="loadReportsList()">
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div id="reportsContent">
+                            <div id="reportsList" class="reports-list">
+                                <p>Loading reports...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <i class="fas fa-code"></i>
+            JSON Data
+            </button>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- History Tab -->
+    <div id="history-tab" class="tab-content">
+        <div class="data-table-container">
+            <div class="table-header">
+                <div class="table-title">Processing History</div>
+                <div class="table-controls">
+                    <button class="btn btn-secondary" onclick="refreshHistory()">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh
+                    </button>
+                    <button class="btn btn-danger" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i>
+                        Clear All
+                    </button>
+                </div>
+            </div>
+            <table class="data-table" id="historyTable">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>File Type</th>
+                        <th>Processed Date</th>
+                        <th>Data Quality</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <!-- History data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </main>
+    </div>
+
+    <!-- External JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="./js/enhanced-app.js"></script>
+    
+    <!-- Particle background -->
+    <div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; opacity: 0.3;"></div>
+    
+    <script>
+        // Initialize particle background
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 800 } },
+                    color: { value: '#3b82f6' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: '#3b82f6',
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: 'none',
+                        random: true,
+                        straight: false,
+                        out_mode: 'out',
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: 'canvas',
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' },
+                        resize: true
+                    },
+                    modes: {
+                        repulse: { distance: 100, duration: 0.4 },
+                        push: { particles_nb: 4 }
+                    }
+                },
+                retina_detect: true
+            });
+        }
+    </script>
+</body>
+
+</html>
