@@ -430,8 +430,10 @@ class AuthenticationManager:
             if jti:
                 self.token_blacklist.add(jti)
                 return True
-        except Exception:
-            pass
+        except Exception as e:
+            # Log error instead of silent pass (CWE-703 fix)
+            logger.warning(f"Error validating path: {str(e)[:100]}")
+            return False
         return False
 
 

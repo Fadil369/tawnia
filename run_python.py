@@ -70,13 +70,36 @@ def check_python_version() -> bool:
         return False
 
 def run_command(command: list, cwd: Optional[Path] = None, capture_output: bool = False) -> tuple:
-    """Run a system command"""
+    """
+    Run a system command safely with input validation (CWE-78 fix)
+    
+    Args:
+        command: List of command arguments (validated)
+        cwd: Working directory
+        capture_output: Whether to capture output
+        
+    Returns:
+        Tuple of (success, output)
+    """
+    # Validate command is a list and not empty
+    if not isinstance(command, list) or not command:
+        return False, "Command must be a non-empty list"
+    
+    # Validate command components contain no shell injection characters
+    dangerous_chars = ['&', '|', ';', '`', '$', '(', ')', '<', '>', '"', "'", '\\', '\n', '\r']
+    for arg in command:
+        if not isinstance(arg, str):
+            return False, "All command arguments must be strings"
+        if any(char in arg for char in dangerous_chars):
+            return False, f"Command argument contains dangerous characters: {arg}"
+    
     try:
         if capture_output:
-            result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=True)
+            # Use shell=False for security and validate all arguments
+            result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=True, shell=False)
             return True, result.stdout.strip()
         else:
-            result = subprocess.run(command, cwd=cwd, check=True)
+            subprocess.run(command, cwd=cwd, check=True, shell=False)
             return True, ""
     except subprocess.CalledProcessError as e:
         return False, str(e)
@@ -266,8 +289,8 @@ def run_tests() -> bool:
         print_warning(f"Some tests failed: {error}")
         return False
 
-def start_server(port: int = 3000, host: str = "0.0.0.0", reload: bool = False) -> None:
-    """Start the FastAPI server"""
+def start_server(port: int = 3000, host: str = "127.0.0.1", reload: bool = False) -> None:
+    """Start the FastAPI server - Use localhost for development security (CWE-605 fix)"""
     print_info(f"Starting server on {host}:{port}...")
 
     venv_python = get_venv_python()
@@ -282,7 +305,8 @@ def start_server(port: int = 3000, host: str = "0.0.0.0", reload: bool = False) 
     try:
         print_success(f"Server starting at http://{host}:{port}")
         print_info("Press Ctrl+C to stop the server")
-        subprocess.run(cmd, cwd=PROJECT_DIR)
+        # Use shell=False for security (CWE-78 fix)
+        subprocess.run(cmd, cwd=PROJECT_DIR, shell=False, check=True)
     except KeyboardInterrupt:
         print_info("\nServer stopped by user")
     except Exception as e:
@@ -366,7 +390,7 @@ def main():
     parser.add_argument("--validate", action="store_true", help="Validate environment setup")
     parser.add_argument("--dev", action="store_true", help="Start server in development mode")
     parser.add_argument("--port", type=int, default=3000, help="Server port (default: 3000)")
-    parser.add_argument("--host", type=str, default="0.0.0.0", help="Server host (default: 0.0.0.0)")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Server host (default: 127.0.0.1) - Use localhost for security")
     parser.add_argument("--help-extended", action="store_true", help="Show extended help")
 
     args = parser.parse_args()

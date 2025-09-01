@@ -343,8 +343,10 @@ class ExcelProcessor:
                 inconsistent = (service_dates > claim_dates).sum()
                 if inconsistent > 0:
                     warnings.append(f"Service dates after claim dates: {inconsistent} records")
-            except Exception:
-                pass
+            except Exception as e:
+                # Log error instead of silent pass (CWE-703 fix)
+                logger.warning(f"Error validating service dates: {str(e)[:100]}")
+                continue
 
         # Check amount consistency
         if 'amount' in df.columns and 'status' in df.columns:
@@ -352,8 +354,10 @@ class ExcelProcessor:
                 denied_with_amount = df[(df['status'].str.lower() == 'denied') & (df['amount'] > 0)]
                 if len(denied_with_amount) > 0:
                     warnings.append(f"Denied claims with positive amounts: {len(denied_with_amount)} records")
-            except Exception:
-                pass
+            except Exception as e:
+                # Log error instead of silent pass (CWE-703 fix)
+                logger.warning(f"Error validating denied claims: {str(e)[:100]}")
+                continue
 
         return warnings
 
@@ -390,8 +394,10 @@ class ExcelProcessor:
                             'column': col
                         }
                         break
-            except Exception:
-                pass
+            except Exception as e:
+                # Log error instead of silent pass (CWE-703 fix)
+                logger.warning(f"Error finding column pattern: {str(e)[:100]}")
+                continue
 
         return DataSummary(
             total_records=len(df),

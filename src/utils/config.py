@@ -173,8 +173,8 @@ class CloudflareSettings(BaseSettings):
 class Settings(BaseSettings):
     """Main configuration class"""
 
-    # Server settings
-    host: str = Field(default="0.0.0.0", env="HOST")
+    # Server settings - Use localhost for development security (CWE-605 fix)
+    host: str = Field(default="127.0.0.1", env="HOST")
     port: int = Field(default=8000, env="PORT")
     debug: bool = Field(default=False, env="DEBUG")
     reload: bool = Field(default=False, env="RELOAD")
