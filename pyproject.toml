@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tawnia-healthcare-analytics"
+version = "2.0.0"
+description = "AI-powered healthcare insurance data analysis platform"
+authors = [{name = "Tawnia Healthcare Analytics"}]
+license = {text = "MIT"}
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.112.0",
+    "uvicorn[standard]>=0.30.5",
+    "pydantic>=2.8.2",
+    "pandas>=2.2.2",
+    "numpy>=1.26.4",
+    "cryptography>=43.0.0",
+    "pillow>=10.4.0"
+]
+
+[tool.bandit]
+exclude_dirs = ["tests", "venv", ".venv"]
+skips = ["B101", "B601"]
+
+[tool.safety]
+ignore = []
+full_report = true
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

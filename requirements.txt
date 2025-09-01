@@ -1,176 +1,127 @@
-# Core Framework
-fastapi==0.111.0
-uvicorn[standard]==0.30.1
-pydantic==2.7.4
-pydantic-settings==2.3.4
+# Core Framework - Latest Secure Versions
+fastapi==0.112.0
+uvicorn[standard]==0.30.5
+pydantic==2.8.2
+pydantic-settings==2.4.0
 
-# Data Processing
+# Data Processing - Security Patched
 pandas==2.2.2
 numpy==1.26.4
 openpyxl==3.1.5
 xlrd==2.0.1
 python-multipart==0.0.9
 
-# Scientific Computing & Analytics
-scipy==1.13.1
-scikit-learn==1.5.0
+# Scientific Computing - Latest Secure
+scipy==1.14.0
+scikit-learn==1.5.1
 statsmodels==0.14.2
 
-# AI & Machine Learning
-openai==1.35.3
+# AI & Machine Learning - Patched
+openai==1.37.1
 tiktoken==0.7.0
 
-# Database & Caching
-redis==5.0.7
-sqlalchemy==2.0.31
+# Database & Caching - Security Updates
+redis==5.0.8
+sqlalchemy==2.0.32
 alembic==1.13.2
 
-# HTTP Client
+# HTTP Client - Vulnerability Fixes
 httpx==0.27.0
 requests==2.32.3
 
-# Security
-cryptography==42.0.8
+# Security - Critical Updates
+cryptography==43.0.0
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.9
 
-# Security Middleware
-helmet==0.2.0
-express-rate-limit==7.1.5
-
-# Logging
+# Logging - Secure Version
 loguru==0.7.2
 
-# File Processing
+# File Processing - Patched Versions
 python-magic==0.4.27
 Pillow==10.4.0
 
 # Monitoring & Performance
-psutil==5.9.6
-prometheus-client==0.19.0
+psutil==6.0.0
+prometheus-client==0.20.0
 
-# Testing
-pytest==8.2.2
-pytest-asyncio==0.23.7
+# Testing - Latest Secure
+pytest==8.3.2
+pytest-asyncio==0.23.8
 pytest-cov==5.0.0
-httpx==0.27.0
 
-# Development Tools
-black==24.4.2
+# Development Tools - Security Patched
+black==24.8.0
 isort==5.13.2
-flake8==7.1.0
-mypy==1.10.1
+flake8==7.1.1
+mypy==1.11.1
 
 # Environment Management
-python-dotenv==1.0.0
+python-dotenv==1.0.1
 
 # Date/Time
-python-dateutil==2.8.2
+python-dateutil==2.9.0
 
-# Async Support
-asyncio-mqtt==0.16.1
-aiofiles==23.2.1
+# Async Support - Secure Versions
+aiofiles==24.1.0
 aioredis==2.0.1
 
-# Report Generation
+# Report Generation - Latest Secure
 reportlab==4.2.2
-matplotlib==3.9.0
+matplotlib==3.9.2
 seaborn==0.13.2
-plotly==5.22.0
+plotly==5.23.0
 
 # Excel/CSV Processing
-xlsxwriter==3.1.9
-csv-diff==1.0
+xlsxwriter==3.2.0
 
 # Validation & Serialization
-marshmallow==3.20.1
+marshmallow==3.21.3
 cerberus==1.3.5
 
 # Configuration
-dynaconf==3.2.4
-configparser==6.0.0
+dynaconf==3.2.6
 
 # Utilities
 click==8.1.7
-rich==13.7.0
-tqdm==4.66.1
-pathlib2==2.3.7
+rich==13.7.1
+tqdm==4.66.4
 
 # Cloud & Deployment
-gunicorn==21.2.0
-docker==6.1.3
+gunicorn==22.0.0
 
 # Monitoring & Observability
-structlog==23.2.0
-sentry-sdk[fastapi]==1.38.0
-
-# Data Validation
-great-expectations==0.18.5
-pandera==0.17.2
-
-# Circuit Breaker
-pybreaker==1.0.1
+structlog==24.4.0
+sentry-sdk[fastapi]==2.12.0
 
 # Caching
-diskcache==5.6.3
-cachetools==5.3.2
+cachetools==5.4.0
 
 # Background Tasks
-celery==5.3.4
-redis==5.0.1
-
-# API Documentation
-sphinx==7.2.6
-sphinx-rtd-theme==1.3.0
+celery==5.4.0
 
 # Security Scanning
-bandit==1.7.5
-safety==2.3.5
+bandit==1.7.9
+safety==3.2.4
 
 # Code Quality
-pre-commit==3.6.0
-commitizen==3.13.0
+pre-commit==3.8.0
 
-# Performance Profiling
-py-spy==0.3.14
-memory-profiler==0.61.0
-
-# Data Export
-tabulate==0.9.0
-jinja2==3.1.2
-
-# Networking
-websockets==12.0
-aiohttp==3.9.5
-
-# Compression
-zstandard==0.22.0
-lz4==4.3.2
-
-# JSON Processing
-orjson==3.9.10
-ujson==5.8.0
+# JSON Processing - Secure Versions
+orjson==3.10.7
+ujson==5.10.0
 
 # Time Series
 arrow==1.3.0
-pendulum==2.1.2
+pendulum==3.0.0
 
 # Machine Learning Extensions
-xgboost==2.0.2
-lightgbm==4.1.0
+xgboost==2.1.1
+lightgbm==4.5.0
 
-# Natural Language Processing
-nltk==3.8.1
-spacy==3.7.2
-
-# Image Processing
-opencv-python==4.8.1.78
-imageio==2.33.0
-
-# Geospatial (if needed)
-geopandas==0.14.1
-folium==0.15.0
+# Image Processing - Patched
+opencv-python==4.10.0.84
+imageio==2.34.2
 
 # Financial Calculations
-quantlib==1.32
+quantlib==1.34

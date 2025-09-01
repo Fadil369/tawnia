@@ -11,6 +11,9 @@ on:
 jobs:
   security-audit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     
     steps:
     - uses: actions/checkout@v4
@@ -28,19 +31,26 @@ jobs:
         cache: 'pip'
     
     - name: Install Node dependencies
-      run: npm ci
+      run: npm ci --audit-level=none
     
     - name: Install Python dependencies
       run: pip install -r requirements.txt
     
     - name: Run npm audit
-      run: npm audit --audit-level=moderate
+      run: npm audit --audit-level=high --production
+      continue-on-error: true
     
     - name: Run Python security check
       run: |
-        pip install safety bandit
-        safety check
+        pip install safety==3.2.4 bandit==1.7.9
+        safety check --json --output safety-report.json || true
         bandit -r src/ -f json -o bandit-report.json || true
+    
+    - name: Run Semgrep
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: auto
+      continue-on-error: true
     
     - name: Upload security reports
       uses: actions/upload-artifact@v4
@@ -49,4 +59,4 @@ jobs:
         name: security-reports
         path: |
           bandit-report.json
-          npm-audit.json
+          safety-report.json

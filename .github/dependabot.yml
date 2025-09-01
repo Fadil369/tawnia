@@ -3,8 +3,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
+      interval: "daily"
+    open-pull-requests-limit: 15
     reviewers:
       - "Fadil369"
     assignees:
@@ -12,12 +12,20 @@ updates:
     commit-message:
       prefix: "security"
       include: "scope"
+    allow:
+      - dependency-type: "all"
+    groups:
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "security"
 
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
+      interval: "daily"
+    open-pull-requests-limit: 15
     reviewers:
       - "Fadil369"
     assignees:
@@ -25,9 +33,17 @@ updates:
     commit-message:
       prefix: "security"
       include: "scope"
+    allow:
+      - dependency-type: "all"
+    groups:
+      security-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "security"
 
   - package-ecosystem: "github-actions"
     directory: "/.github/workflows"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
+      interval: "daily"
+    open-pull-requests-limit: 10
