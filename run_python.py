@@ -99,7 +99,7 @@ def run_command(command: list, cwd: Optional[Path] = None, capture_output: bool 
             result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=True, shell=False)
             return True, result.stdout.strip()
         else:
-            result = subprocess.run(command, cwd=cwd, check=True, shell=False)
+            subprocess.run(command, cwd=cwd, check=True, shell=False)
             return True, ""
     except subprocess.CalledProcessError as e:
         return False, str(e)
