@@ -9,11 +9,11 @@ pandas==2.2.3
 numpy==2.1.1
 openpyxl==3.1.5
 xlrd==2.0.1
-python-multipart==0.0.12
+python-multipart==0.0.18
 
 # Scientific Computing - Latest Secure
 scipy==1.14.1
-scikit-learn==1.5.2
+scikit-learn==1.5.0
 statsmodels==0.14.3
 
 # AI & Machine Learning - Patched
@@ -27,10 +27,10 @@ alembic==1.13.3
 
 # HTTP Client - Vulnerability Fixes
 httpx==0.27.2
-requests==2.32.3
+requests==2.32.4
 
 # Security - Critical Updates
-cryptography==43.0.1
+cryptography==44.0.1
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 
@@ -85,7 +85,7 @@ dynaconf==3.2.6
 # Utilities
 click==8.1.7
 rich==13.8.1
-tqdm==4.66.5
+tqdm==4.66.3
 
 # Cloud & Deployment
 gunicorn==23.0.0
@@ -117,7 +117,7 @@ pendulum==3.0.0
 
 # Machine Learning Extensions
 xgboost==2.1.1
-lightgbm==4.5.0
+lightgbm==4.6.0
 
 # Image Processing - Patched
 opencv-python==4.10.0.84
@@ -130,10 +130,10 @@ quantlib==1.34
 bcrypt==4.2.0
 argon2-cffi==23.1.0
 itsdangerous==2.2.0
-werkzeug==3.0.4
-jinja2==3.1.4
+werkzeug==3.0.6
+jinja2==3.1.6
 markupsafe==2.1.5
-urllib3==2.2.3
+urllib3==2.5.0
 certifi==2024.8.30
 charset-normalizer==3.4.0
 idna==3.10
