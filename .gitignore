@@ -1,16 +1,151 @@
-node_modules/
-venv/
+# Security and Environment Files - CRITICAL
+.env*
+!.env.example
+!.env.secure
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+config/production/
+
+# Logs and Runtime Data
+logs/
 *.log
-.env
-.DS_Store
-dist/
-build/
-coverage/
-.nyc_output/
-*.pyc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+temp/
+tmp/
+cache/
+*.cache
+.cache/
+
+# Upload and Processing Files
+uploads/*.xlsx
+uploads/*.xls
+uploads/*.csv
+uploads/*.json
+!uploads/.gitkeep
+data/processed/
+data/temp/
+
+# Dependency directories
+node_modules/
 __pycache__/
-.pytest_cache/
+*.py[cod]
+*$py.class
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.virtualenv/
+
+# IDEs and editors
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-*
+*.code-workspace
+
+# Testing and Coverage
+.coverage
+.pytest_cache/
+.nyc_output
+coverage/
+htmlcov/
+.tox/
+.nox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+test-results/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+
+# Backup files
+*.backup
+*.bak
+*.orig
+backups/
+
+# Cloud and Deployment
+.wrangler/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Security and audit files
+security-scan-results.json
+audit-results.json
+vulnerability-report.json
+
+# Lock files (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml
+poetry.lock
+Pipfile.lock
+
+# Web build artifacts
+.next/
+out/
+.nuxt/
+.vuepress/dist
+.serverless/
+.parcel-cache/
+
+# Runtime and compiled files
+*.dll
+*.exe
+*.pdb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates

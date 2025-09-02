@@ -1,6 +1,6 @@
 /**
  * Tawnia Healthcare Analytics - Enhanced UI/UX Application
- * Modern, responsive, and feature-rich frontend interface
+ * Modern, responsive, and feature-rich frontend interface with security enhancements
  */
 
 class TawniaAnalyzer {
@@ -21,7 +21,93 @@ class TawniaAnalyzer {
             metrics: {}
         };
 
+        // Security configuration
+        this.security = {
+            maxFileSize: 50 * 1024 * 1024, // 50MB
+            allowedExtensions: ['.xlsx', '.xls', '.csv'],
+            maxFilesPerUpload: 5,
+            sanitizeHTML: true
+        };
+
         this.init();
+    }
+
+    /**
+     * Security: HTML sanitization to prevent XSS attacks
+     * @param {string} html - Raw HTML string
+     * @returns {string} - Sanitized HTML string
+     */
+    sanitizeHTML(html) {
+        if (!this.security.sanitizeHTML) return html;
+        
+        const div = document.createElement('div');
+        div.textContent = html;
+        return div.innerHTML;
+    }
+
+    /**
+     * Security: Safely set HTML content with sanitization
+     * @param {HTMLElement} element - Target element
+     * @param {string} html - HTML content to set
+     */
+    safeSetHTML(element, html) {
+        if (typeof html !== 'string') {
+            console.warn('Non-string content passed to safeSetHTML');
+            element.textContent = String(html);
+            return;
+        }
+        
+        // Create a temporary container
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        
+        // Remove potentially dangerous elements and attributes
+        const dangerousElements = temp.querySelectorAll('script, iframe, object, embed, form');
+        dangerousElements.forEach(el => el.remove());
+        
+        // Remove event handlers and javascript: URLs
+        const allElements = temp.querySelectorAll('*');
+        allElements.forEach(el => {
+            // Remove all event handler attributes
+            Array.from(el.attributes).forEach(attr => {
+                if (attr.name.startsWith('on') || attr.value.includes('javascript:')) {
+                    el.removeAttribute(attr.name);
+                }
+            });
+        });
+        
+        element.innerHTML = temp.innerHTML;
+    }
+
+    /**
+     * Security: Validate file before processing
+     * @param {File} file - File to validate
+     * @returns {Object} - Validation result
+     */
+    validateFile(file) {
+        const errors = [];
+        
+        // Check file size
+        if (file.size > this.security.maxFileSize) {
+            errors.push(`File size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds maximum allowed size (${this.security.maxFileSize / 1024 / 1024}MB)`);
+        }
+        
+        // Check file extension
+        const extension = '.' + file.name.split('.').pop().toLowerCase();
+        if (!this.security.allowedExtensions.includes(extension)) {
+            errors.push(`File type "${extension}" is not allowed. Allowed types: ${this.security.allowedExtensions.join(', ')}`);
+        }
+        
+        // Check filename for security issues
+        if (file.name.includes('..') || file.name.includes('/') || file.name.includes('\\')) {
+            errors.push('Invalid filename - contains path traversal characters');
+        }
+        
+        return {
+            valid: errors.length === 0,
+            errors: errors,
+            file: file
+        };
     }
 
     /**
@@ -99,6 +185,28 @@ class TawniaAnalyzer {
         });
 
         // Window resize with debouncing
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.resizeCharts();
+                this.updateResponsiveLayout();
+            }, 250);
+        });
+        
+        // Visibility change handling
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.pauseAnimations();
+            } else {
+                this.resumeAnimations();
+                this.refreshData();
+            }
+        });
+
+        // Scroll-based animations
+        this.setupScrollAnimations();
+    }
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);

@@ -1,17 +1,23 @@
 {
   "name": "tawnia-healthcare-analytics",
-  "version": "2.0.0",
-  "description": "AI-powered healthcare insurance data analysis platform",
-  "main": "main.py",
+  "version": "2.1.0",
+  "description": "AI-powered healthcare insurance data analysis platform with enhanced security",
+  "main": "main_enhanced.py",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest",
+    "test": "jest --coverage",
+    "test:security": "npm audit && npm run security:scan",
+    "security:scan": "node security-scan.js",
     "build": "echo 'Build complete - static files ready'",
     "build:frontend": "webpack --mode production",
     "build:backend": "echo 'Backend build complete'",
     "deploy": "wrangler pages deploy public",
-    "deploy:cloudflare": "wrangler pages deploy public"
+    "deploy:cloudflare": "wrangler pages deploy public",
+    "lint": "eslint src/ --ext .js",
+    "lint:fix": "eslint src/ --ext .js --fix",
+    "security:audit": "npm audit --audit-level moderate",
+    "precommit": "npm run lint && npm run test && npm run security:audit"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -25,7 +31,14 @@
     "dotenv": "^16.4.5",
     "uuid": "^10.0.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
-    "csv-parser": "^3.0.0"
+    "csv-parser": "^3.0.0",
+    "express-validator": "^7.2.0",
+    "express-session": "^1.18.0",
+    "connect-redis": "^7.1.1",
+    "redis": "^4.7.0",
+    "bcrypt": "^5.1.1",
+    "crypto-js": "^4.2.0",
+    "node-cache": "^5.1.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
@@ -33,20 +46,36 @@
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
     "@cloudflare/workers-types": "^4.20240925.0",
-    "wrangler": "^3.78.2"
+    "wrangler": "^3.78.2",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-security": "^3.0.1",
+    "supertest": "^7.0.0",
+    "security-scan": "^1.0.0"
   },
   "engines": {
-    "node": ">=20.17.0"
+    "node": ">=20.17.0",
+    "npm": ">=9.0.0"
   },
   "keywords": [
     "healthcare",
     "analytics",
     "insurance",
     "ai",
-    "data-analysis"
+    "data-analysis",
+    "security",
+    "hipaa-compliant"
   ],
   "author": "Tawnia Healthcare Analytics",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fadil369/tawnia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Fadil369/tawnia/issues"
+  },
+  "homepage": "https://github.com/Fadil369/tawnia#readme",
   "overrides": {
     "semver": "^7.6.3",
     "braces": "^3.0.3",
@@ -96,6 +125,15 @@
     "semver": "^7.6.3",
     "braces": "^3.0.3",
     "ws": "^8.18.0",
-    "micromatch": "^4.0.8"
+    "micromatch": "^4.0.8",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.8",
+    "node-forge": "^1.3.1"
+  },
+  "security": {
+    "audit": {
+      "level": "moderate",
+      "skip": []
+    }
   }
 }

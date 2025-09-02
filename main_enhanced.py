@@ -126,19 +126,52 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Add middleware
-app.add_middleware(GZipMiddleware, minimum_size=1000)
+# Add security middleware first
+from src.security.security_config import get_security_config
+
+security_config = get_security_config()
+
+# Security middleware with enhanced configuration
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=settings.security.allowed_hosts
+    allowed_hosts=security_config.cors.allowed_origins if security_config.cors.allowed_origins else ["*"]
 )
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.security.allowed_origins,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["*"],
+    allow_origins=security_config.cors.allowed_origins,
+    allow_credentials=security_config.cors.allow_credentials,
+    allow_methods=security_config.cors.allowed_methods,
+    allow_headers=security_config.cors.allowed_headers,
+    max_age=security_config.cors.max_age,
 )
+
+# Add compression after security
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+# Custom security headers middleware
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    """Add comprehensive security headers"""
+    response = await call_next(request)
+    
+    # Add security headers
+    security_headers = security_config.get_security_headers()
+    for header, value in security_headers.items():
+        response.headers[header] = value
+    
+    # Additional security headers
+    response.headers["X-API-Version"] = "2.0.0"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-DNS-Prefetch-Control"] = "off"
+    response.headers["X-Download-Options"] = "noopen"
+    response.headers["X-Permitted-Cross-Domain-Policies"] = "none"
+    
+    # Remove server information
+    if "server" in response.headers:
+        del response.headers["server"]
+    
+    return response
 
 # Mount static files
 if Path("public").exists():
