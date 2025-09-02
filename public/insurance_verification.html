@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self';">
+  <title>Health Insurance Eligibility Verification</title>
+  <!-- Load external libraries -->
+  <!-- SheetJS for Excel parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha512-8UO3o5l+wNn6dFZLlgzSTFjhTGrwa3ejjcJlVGkzaGHoQayNlUxPHC8VeuGtdmmv27AcpXChmwMfU86ieZlX0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- Tawnia Navigation System -->
+  <script src="./js/tawnia-navigation.js"></script>
+  
+  <!-- Tawnia Shared Components -->
+  <script src="./js/tawnia-components.js"></script>
+  <!-- Integration Tests -->
+  <script src="./js/tawnia-integration-tests.js"></script>
+  <style>
+    /* NEURAL: BrainSAIT brand colours as CSS variables */
+    :root {
+      --midnight-blue: #1a365d;
+      --medical-blue:  #2b6cb8;
+      --signal-teal:   #0ea5e9;
+      --deep-orange:   #ea580c;
+      --professional-gray: #64748b;
+    }
+    /* Global styles */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--midnight-blue), var(--medical-blue));
+      color: #fff;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      margin: 0;
+      line-height: 1.2;
+    }
+    button {
+      cursor: pointer;
+    }
+    /* Glass morphism panel */
+    .glass {
+      background: linear-gradient(135deg, var(--midnight-blue)15%, var(--medical-blue)25%, var(--signal-teal)15%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 1rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+    }
+    /* Upload dropzone */
+    .dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .dropzone:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+    .hidden-input {
+      display: none;
+    }
+    .primary-btn {
+      background-color: var(--medical-blue);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+    .primary-btn:hover {
+      background-color: var(--signal-teal);
+    }
+    .secondary-btn {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+    .secondary-btn:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+    .stat-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: right;
+    }
+    th {
+      font-weight: bold;
+    }
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: #fff;
+    }
+    .badge-eligible { background-color: var(--signal-teal); }
+    .badge-expired { background-color: var(--deep-orange); }
+    .badge-pending { background-color: var(--professional-gray); }
+    .badge-not { background-color: var(--medical-blue); }
+    .progress-container {
+      margin-top: 1rem;
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.3);
+      height: 0.5rem;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      width: 0;
+      background-color: var(--signal-teal);
+      transition: width 0.3s ease;
+    }
+    .footer-note {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    /* Direction support */
+    [dir="rtl"] {
+      direction: rtl;
+    }
+    [dir="rtl"] th, [dir="rtl"] td {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Container -->
+  <div id="tawnia-navigation"></div>
+  
+  <div class="container" id="app" dir="rtl">
+    <!-- Content will be injected by JavaScript -->
+  </div>
+  <script>
+  /**
+   * Health Insurance Eligibility Verification Web App
+   *
+   * This script provides a bilingual (Arabic/English) user interface to upload
+   * Excel files, parse insurance records, simulate verification via
+   * governmental and insurance APIs, and display results with options
+   * to export data. All logic runs client-side; no sensitive data is
+   * transmitted to any server. Designed for BrainSAIT demonstration use.
+   */
+
+  // Application state
+  let currentLang = 'ar';
+  let records = [];
+  let verificationResults = [];
+  let isProcessing = false;
+  let uploadProgress = 0;
+
+  // Translations
+  const content = {
+    title: { ar: 'نظام التحقق من أهلية التأمين الصحي', en: 'Health Insurance Eligibility Verification System' },
+    nafathIntegration: { ar: 'التكامل مع نافذ', en: 'Nafath Integration' },
+    uploadExcel: { ar: 'رفع ملف إكسل', en: 'Upload Excel File' },
+    verifyEligibility: { ar: 'التحقق من الأهلية', en: 'Verify Eligibility' },
+    results: { ar: 'النتائج', en: 'Results' },
+    nationalId: { ar: 'رقم الهوية الوطنية', en: 'National ID' },
+    fullName: { ar: 'الاسم الكامل', en: 'Full Name' },
+    insuranceCompany: { ar: 'شركة التأمين', en: 'Insurance Company' },
+    policyNumber: { ar: 'رقم البوليصة', en: 'Policy Number' },
+    eligibilityStatus: { ar: 'حالة الأهلية', en: 'Eligibility Status' },
+    expiryDate: { ar: 'تاريخ الانتهاء', en: 'Expiry Date' },
+    downloadResults: { ar: 'تحميل النتائج', en: 'Download Results' },
+    processing: { ar: 'جاري المعالجة…', en: 'Processing…' },
+    nafath: { ar: 'نافذ', en: 'Nafath' },
+    eligible: { ar: 'مؤهل', en: 'Eligible' },
+    not_eligible: { ar: 'غير مؤهل', en: 'Not Eligible' },
+    expired: { ar: 'منتهي الصلاحية', en: 'Expired' },
+    pending: { ar: 'قيد المراجعة', en: 'Pending' },
+    totalRecords: { ar: 'إجمالي السجلات', en: 'Total Records' },
+    nafathVerified: { ar: 'تم التحقق بنافذ', en: 'Nafath Verified' },
+    totalEligible: { ar: 'مؤهل', en: 'Eligible' },
+    totalExpired: { ar: 'منتهي الصلاحية', en: 'Expired' },
+    chooseFile: { ar: 'اختيار الملف', en: 'Choose File' },
+    dragHere: { ar: 'اسحب ملف الإكسل هنا أو اضغط للاختيار', en: 'Drag Excel file here or click to select' },
+    csvHeader: {
+      ar: 'رقم الهوية,الاسم,شركة التأمين,رقم البوليصة,حالة الأهلية,تاريخ الانتهاء,تحقق نافذ,نتيجة التحقق',
+      en: 'National ID,Name,Insurance Company,Policy Number,Eligibility,Expiry Date,Nafath Verified,Verification Result'
+    }
+  };
+
+  function t(key) {
+    return content[key] ? content[key][currentLang] : key;
+  }
+
+  // Utility: mask national IDs for display
+  function maskId(id) {
+    return id.length === 10 ? id.slice(0, 3) + '****' + id.slice(-3) : id;
+  }
+
+  // Render the entire application based on current state
+  function render() {
+    const app = document.getElementById('app');
+    // Set direction attribute
+    app.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+    // Clear existing content
+    app.innerHTML = '';
+    // Header section
+    const header = document.createElement('div');
+    header.style.display = 'flex';
+    header.style.justifyContent = 'space-between';
+    header.style.alignItems = 'center';
+    header.style.marginBottom = '1.5rem';
+    // Title and subtitle
+    const titleGroup = document.createElement('div');
+    const h1 = document.createElement('h1');
+    h1.textContent = t('title');
+    h1.style.fontSize = '2rem';
+    h1.style.fontWeight = 'bold';
+    h1.style.marginBottom = '0.25rem';
+    const subtitle = document.createElement('div');
+    subtitle.style.display = 'flex';
+    subtitle.style.alignItems = 'center';
+    subtitle.style.gap = '0.5rem';
+    const shieldIcon = document.createElement('span');
+    shieldIcon.textContent = '🛡️';
+    subtitle.appendChild(shieldIcon);
+    const nafathSpan = document.createElement('span');
+    nafathSpan.textContent = t('nafathIntegration');
+    nafathSpan.style.opacity = '0.8';
+    subtitle.appendChild(nafathSpan);
+    titleGroup.appendChild(h1);
+    titleGroup.appendChild(subtitle);
+    header.appendChild(titleGroup);
+    // Buttons group
+    const btnGroup = document.createElement('div');
+    // Language toggle
+    const langBtn = document.createElement('button');
+    langBtn.className = 'secondary-btn';
+    langBtn.textContent = currentLang === 'ar' ? 'English' : 'العربية';
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      render();
+    });
+    btnGroup.appendChild(langBtn);
+    // Verify eligibility button
+    const verifyBtn = document.createElement('button');
+    verifyBtn.className = 'secondary-btn';
+    verifyBtn.textContent = t('verifyEligibility');
+    verifyBtn.style.marginLeft = '0.5rem';
+    verifyBtn.disabled = records.length === 0 || isProcessing;
+    verifyBtn.addEventListener('click', () => {
+      runVerification();
+    });
+    btnGroup.appendChild(verifyBtn);
+    header.appendChild(btnGroup);
+    app.appendChild(header);
+    // Upload & statistics sections
+    const grid = document.createElement('div');
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = '1fr';
+    grid.style.gap = '1.5rem';
+    if (window.innerWidth >= 800) {
+      grid.style.gridTemplateColumns = '1fr 1fr';
+    }
+    // Upload card
+    const uploadCard = document.createElement('div');
+    uploadCard.className = 'glass';
+    // Card title
+    const uploadTitle = document.createElement('h2');
+    uploadTitle.textContent = t('uploadExcel');
+    uploadTitle.style.fontSize = '1.5rem';
+    uploadTitle.style.fontWeight = 'bold';
+    uploadTitle.style.marginBottom = '1rem';
+    uploadCard.appendChild(uploadTitle);
+    // Dropzone
+    const dropzone = document.createElement('div');
+    dropzone.className = 'dropzone';
+    const dropText = document.createElement('p');
+    dropText.textContent = t('dragHere');
+    dropText.style.opacity = '0.8';
+    dropText.style.marginBottom = '1rem';
+    dropzone.appendChild(dropText);
+    // Hidden file input
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.xlsx,.xls';
+    fileInput.className = 'hidden-input';
+    fileInput.id = 'excel-upload-input';
+    fileInput.addEventListener('change', handleFileUpload);
+    dropzone.appendChild(fileInput);
+    // Choose file button
+    const chooseLabel = document.createElement('label');
+    chooseLabel.setAttribute('for', 'excel-upload-input');
+    chooseLabel.className = 'primary-btn';
+    chooseLabel.textContent = t('chooseFile');
+    dropzone.appendChild(chooseLabel);
+    uploadCard.appendChild(dropzone);
+    // Progress bar
+    if (isProcessing) {
+      const progressWrapper = document.createElement('div');
+      progressWrapper.className = 'progress-container';
+      const progressInfo = document.createElement('div');
+      progressInfo.style.display = 'flex';
+      progressInfo.style.justifyContent = 'space-between';
+      progressInfo.style.fontSize = '0.875rem';
+      progressInfo.style.opacity = '0.8';
+      progressInfo.innerHTML = `<span>${t('processing')}</span><span>${uploadProgress}%</span>`;
+      const progressBar = document.createElement('div');
+      progressBar.className = 'progress-bar';
+      const progressInner = document.createElement('div');
+      progressInner.className = 'progress-bar-inner';
+      progressInner.style.width = uploadProgress + '%';
+      progressBar.appendChild(progressInner);
+      progressWrapper.appendChild(progressInfo);
+      progressWrapper.appendChild(progressBar);
+      uploadCard.appendChild(progressWrapper);
+    }
+    grid.appendChild(uploadCard);
+    // Statistics card
+    const statsCard = document.createElement('div');
+    statsCard.className = 'glass';
+    const statsTitle = document.createElement('h2');
+    statsTitle.textContent = currentLang === 'ar' ? 'إحصائيات التحقق' : 'Verification Statistics';
+    statsTitle.style.fontSize = '1.5rem';
+    statsTitle.style.fontWeight = 'bold';
+    statsTitle.style.marginBottom = '1rem';
+    statsCard.appendChild(statsTitle);
+    // Stats grid
+    const statsGrid = document.createElement('div');
+    statsGrid.className = 'stats-grid';
+    // Compute counts
+    const total = verificationResults.length;
+    const nafathCount = verificationResults.filter(r => r.nafathVerified).length;
+    const eligibleCount = verificationResults.filter(r => r.eligibilityStatus === 'eligible').length;
+    const expiredCount = verificationResults.filter(r => r.eligibilityStatus === 'expired').length;
+    // Helper to create stat card
+    function statItem(value, label, color) {
+      const card = document.createElement('div');
+      card.className = 'stat-card';
+      const val = document.createElement('div');
+      val.className = 'stat-value';
+      val.textContent = value;
+      if (color) val.style.color = color;
+      const lab = document.createElement('div');
+      lab.style.fontSize = '0.875rem';
+      lab.style.opacity = '0.7';
+      lab.textContent = label;
+      card.appendChild(val);
+      card.appendChild(lab);
+      return card;
+    }
+    statsGrid.appendChild(statItem(total, t('totalRecords'), '#ffffff'));
+    statsGrid.appendChild(statItem(nafathCount, t('nafathVerified'), 'var(--signal-teal)'));
+    statsGrid.appendChild(statItem(eligibleCount, t('totalEligible'), 'var(--medical-blue)'));
+    statsGrid.appendChild(statItem(expiredCount, t('totalExpired'), 'var(--deep-orange)'));
+    statsCard.appendChild(statsGrid);
+    grid.appendChild(statsCard);
+    app.appendChild(grid);
+    // Results table
+    if (verificationResults.length > 0) {
+      const resultsCard = document.createElement('div');
+      resultsCard.className = 'glass';
+      resultsCard.style.marginTop = '1.5rem';
+      // Header row with title and download button
+      const resultsHeader = document.createElement('div');
+      resultsHeader.style.display = 'flex';
+      resultsHeader.style.justifyContent = 'space-between';
+      resultsHeader.style.alignItems = 'center';
+      resultsHeader.style.marginBottom = '1rem';
+      const resultsTitle = document.createElement('h2');
+      resultsTitle.textContent = t('results');
+      resultsTitle.style.fontSize = '1.5rem';
+      resultsTitle.style.fontWeight = 'bold';
+      resultsHeader.appendChild(resultsTitle);
+      // Download button
+      const downloadBtn = document.createElement('button');
+      downloadBtn.className = 'primary-btn';
+      downloadBtn.textContent = t('downloadResults');
+      downloadBtn.addEventListener('click', exportCSV);
+      resultsHeader.appendChild(downloadBtn);
+      resultsCard.appendChild(resultsHeader);
+      // Table container
+      const tableContainer = document.createElement('div');
+      tableContainer.className = 'table-container';
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      const headers = [ 'nationalId', 'fullName', 'insuranceCompany', 'policyNumber', 'eligibilityStatus', 'expiryDate', 'nafath' ];
+      headers.forEach(key => {
+        const th = document.createElement('th');
+        th.textContent = t(key);
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      verificationResults.forEach(res => {
+        const tr = document.createElement('tr');
+        // National ID
+        const tdId = document.createElement('td');
+        tdId.textContent = maskId(res.nationalId);
+        tr.appendChild(tdId);
+        // Full name
+        const tdName = document.createElement('td');
+        tdName.textContent = currentLang === 'ar' ? res.nameAr : res.name;
+        tr.appendChild(tdName);
+        // Insurance company
+        const tdComp = document.createElement('td');
+        tdComp.textContent = res.insuranceCompany;
+        tr.appendChild(tdComp);
+        // Policy number
+        const tdPol = document.createElement('td');
+        tdPol.textContent = res.policyNumber;
+        tr.appendChild(tdPol);
+        // Eligibility status badge
+        const tdStatus = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = 'status-badge';
+        let badgeClass = '';
+        switch (res.eligibilityStatus) {
+          case 'eligible': badgeClass = 'badge-eligible'; break;
+          case 'expired': badgeClass = 'badge-expired'; break;
+          case 'pending': badgeClass = 'badge-pending'; break;
+          default: badgeClass = 'badge-not'; break;
+        }
+        badge.classList.add(badgeClass);
+        // Translate status text
+        badge.textContent = t(res.eligibilityStatus);
+        tdStatus.appendChild(badge);
+        tr.appendChild(tdStatus);
+        // Expiry date
+        const tdExp = document.createElement('td');
+        tdExp.textContent = res.expiryDate;
+        tr.appendChild(tdExp);
+        // Nafath verified icon
+        const tdNafath = document.createElement('td');
+        tdNafath.style.textAlign = 'center';
+        const nafIcon = document.createElement('span');
+        nafIcon.style.fontSize = '1.25rem';
+        nafIcon.textContent = res.nafathVerified ? '✅' : '⚠️';
+        tdNafath.appendChild(nafIcon);
+        tr.appendChild(tdNafath);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      tableContainer.appendChild(table);
+      resultsCard.appendChild(tableContainer);
+      // Footer note about security and compliance
+      const note = document.createElement('p');
+      note.className = 'footer-note';
+      note.textContent = currentLang === 'ar'
+        ? 'للاستخدام العملي: ينبغي نقل عمليات التحقق إلى خادم آمن مع تسجيل المراجعات والتفويض المناسب.'
+        : 'For production use: move verification calls to a secure server with audit logging and proper authorization.';
+      resultsCard.appendChild(note);
+      app.appendChild(resultsCard);
+    }
+  }
+
+  /**
+   * Handle file upload event.
+   * Validates file type and size, parses Excel records and updates state.
+   */
+  function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    // Validate file extension
+    if (!(/\.xlsx$/i.test(file.name) || /\.xls$/i.test(file.name))) {
+      alert(currentLang === 'ar' ? 'يرجى رفع ملف إكسل صالح' : 'Please upload a valid Excel file');
+      return;
+    }
+    // Validate file size (10 MB)
+    if (file.size > 10 * 1024 * 1024) {
+      alert(currentLang === 'ar'
+        ? 'حجم الملف كبير جداً (الحد الأقصى 10 ميجابايت)'
+        : 'File size too large (max 10MB)');
+      return;
+    }
+    // Reset state
+    records = [];
+    verificationResults = [];
+    uploadProgress = 0;
+    isProcessing = true;
+    render();
+    // Read file using FileReader and XLSX
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+      // Convert rows to InsuranceRecord objects
+      const tempRecords = [];
+      json.forEach(row => {
+        const get = key => {
+          // Find matching key regardless of case and whitespace
+          const k = Object.keys(row).find(k => k.toLowerCase().replace(/\s+/g, '') === key.toLowerCase());
+          return k ? String(row[k]).trim() : '';
+        };
+        const rec = {
+          nationalId: get('nationalid') || get('national_id') || get('id'),
+          name: get('name_en') || get('name'),
+          nameAr: get('name_ar') || get('namear'),
+          insuranceCompany: get('insurancecompany') || get('company'),
+          policyNumber: get('policynumber') || get('policy'),
+          eligibilityStatus: (get('eligibilitystatus') || 'pending').toLowerCase(),
+          expiryDate: get('expirydate') || get('expiry'),
+          nafathVerified: ['true','1','yes','نعم'].includes(get('nafathverified').toLowerCase())
+        };
+        // Basic validation: require nationalId and name
+        if (rec.nationalId && rec.name) {
+          tempRecords.push(rec);
+        }
+      });
+      records = tempRecords;
+      // Simulate progress animation
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        uploadProgress = progress;
+        render();
+        if (progress >= 100) {
+          clearInterval(interval);
+          isProcessing = false;
+          uploadProgress = 0;
+          render();
+        }
+      }, 80);
+    };
+    reader.onerror = function() {
+      alert(currentLang === 'ar' ? 'خطأ في قراءة الملف' : 'Error reading file');
+      isProcessing = false;
+      render();
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  /**
+   * Simulate verification for each record.
+   * Updates verificationResults with new properties and triggers UI refresh.
+   */
+  async function runVerification() {
+    if (records.length === 0) return;
+    verificationResults = [];
+    isProcessing = true;
+    uploadProgress = 0;
+    render();
+    for (let i = 0; i < records.length; i++) {
+      const rec = records[i];
+      try {
+        // Simulate Nafath API call
+        const nafathResult = await simulateNafathVerification(rec.nationalId);
+        // Simulate insurance API call
+        const insResult = await simulateInsuranceVerification(rec);
+        const res = {
+          ...rec,
+          nafathVerified: nafathResult.verified,
+          nafathScore: nafathResult.score,
+          insuranceStatus: insResult.status,
+          lastVerified: new Date().toISOString(),
+          verificationId: `VER-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        };
+        verificationResults.push(res);
+      } catch (err) {
+        console.error('Verification failed for', rec.nationalId, err);
+      }
+      // Update progress
+      uploadProgress = Math.round(((i + 1) / records.length) * 100);
+      render();
+      // Small delay to simulate network latency
+      await new Promise(r => setTimeout(r, 300));
+    }
+    isProcessing = false;
+    uploadProgress = 0;
+    render();
+  }
+
+  /**
+   * Simulate Nafath identity verification.
+   * Returns an object with verification status and score.
+   */
+  function simulateNafathVerification(nationalId) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ verified: Math.random() > 0.2, score: Math.random() * 100 });
+      }, 700);
+    });
+  }
+
+  /**
+   * Simulate insurance company verification.
+   * Returns an object with insurance status.
+   */
+  function simulateInsuranceVerification(record) {
+    const statuses = ['active', 'expired', 'suspended', 'pending_renewal'];
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ status: statuses[Math.floor(Math.random() * statuses.length)] });
+      }, 500);
+    });
+  }
+
+  /**
+   * Export verification results as CSV.
+   */
+  function exportCSV() {
+    if (verificationResults.length === 0) return;
+    const rows = [];
+    rows.push(content.csvHeader[currentLang]);
+    verificationResults.forEach(res => {
+      const row = [
+        res.nationalId,
+        currentLang === 'ar' ? res.nameAr : res.name,
+        res.insuranceCompany,
+        res.policyNumber,
+        content[res.eligibilityStatus] ? content[res.eligibilityStatus][currentLang] : res.eligibilityStatus,
+        res.expiryDate,
+        res.nafathVerified ? (currentLang === 'ar' ? 'نعم' : 'Yes') : (currentLang === 'ar' ? 'لا' : 'No'),
+        res.insuranceStatus || ''
+      ];
+      rows.push(row.join(','));
+    });
+    const csvString = '\ufeff' + rows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `insurance_verification_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // Initial render
+  window.addEventListener('load', render);
+  </script>
+</body>
+</html>

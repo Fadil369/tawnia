@@ -11,6 +11,9 @@
     <meta name="keywords" content="healthcare, insurance, analytics, AI, data analysis, claims processing">
     <meta name="author" content="Tawnia Healthcare Analytics">
     
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
@@ -969,9 +972,12 @@
 </head>
 
 <body>
+    <!-- Navigation Container -->
+    <div id="tawnia-navigation"></div>
+    
     <div class="app-container">
         <!-- Header -->
-        <header class="header">
+        <header class="header" id="mainHeader" style="display: none;">
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-heartbeat"></i>
@@ -1332,6 +1338,17 @@
     <!-- External JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- Tawnia Navigation System -->
+    <script src="./js/tawnia-navigation.js"></script>
+    
+    <!-- Tawnia Shared Components -->
+    <script src="./js/tawnia-components.js"></script>
+    
+    <!-- Integration Tests -->
+    <script src="./js/tawnia-integration-tests.js"></script>
+    
+    <!-- Main Application Script -->
     <script src="./js/enhanced-app.js"></script>
     
     <!-- Particle background -->

@@ -1,0 +1,218 @@
+{
+  "timestamp": "2025-09-02T13:47:34.089110",
+  "project_directory": "V:\\NCCI Rejection\\Khamis-hnh.jisr\\July 2025\\Tawnia-Analysis",
+  "tests": [
+    {
+      "test_name": "File Structure Validation",
+      "status": "PASS",
+      "details": {
+        "public/index.html": {
+          "exists": true,
+          "size_bytes": 22800,
+          "readable": true
+        },
+        "public/brainsait-enhanced.html": {
+          "exists": true,
+          "size_bytes": 49838,
+          "readable": true
+        },
+        "public/insurance_verification.html": {
+          "exists": true,
+          "size_bytes": 26368,
+          "readable": true
+        },
+        "public/sw.js": {
+          "exists": true,
+          "size_bytes": 3432,
+          "readable": true
+        },
+        "public/js/app.js": {
+          "exists": true,
+          "size_bytes": 44652,
+          "readable": true
+        },
+        "public/js/enhanced-app.js": {
+          "exists": true,
+          "size_bytes": 43733,
+          "readable": true
+        },
+        "public/js/tawnia-navigation.js": {
+          "exists": true,
+          "size_bytes": 19477,
+          "readable": true
+        },
+        "public/js/tawnia-components.js": {
+          "exists": true,
+          "size_bytes": 26287,
+          "readable": true
+        },
+        "public/js/tawnia-integration-tests.js": {
+          "exists": true,
+          "size_bytes": 13423,
+          "readable": true
+        },
+        "public/INTEGRATION-GUIDE.md": {
+          "exists": true,
+          "size_bytes": 9837,
+          "readable": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_name": "HTML Integration Validation",
+      "status": "PASS",
+      "details": {
+        "Portal": {
+          "file_size": 22786,
+          "has_viewport_meta": true,
+          "has_csp_meta": true,
+          "scripts_integrated": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": true
+          },
+          "has_nav_container": true
+        },
+        "Analytics Dashboard": {
+          "file_size": 48429,
+          "has_viewport_meta": true,
+          "has_csp_meta": true,
+          "scripts_integrated": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": true
+          },
+          "has_nav_container": true
+        },
+        "Insurance Verification": {
+          "file_size": 25137,
+          "has_viewport_meta": true,
+          "has_csp_meta": true,
+          "scripts_integrated": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": true
+          },
+          "has_nav_container": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_name": "JavaScript Content Validation",
+      "status": "PASS",
+      "details": {
+        "Navigation System": {
+          "file_size": 18805,
+          "content_checks": {
+            "class TawniaNavigation": true,
+            "keydown": true,
+            "navigateTo": true,
+            "toggleLanguage": true,
+            "toggleTheme": true
+          },
+          "has_error_handling": false,
+          "has_dom_ready": true
+        },
+        "Shared Components": {
+          "file_size": 25508,
+          "content_checks": {
+            "class TawniaComponents": true,
+            "showModal": true,
+            "showAlert": true,
+            "showToast": true,
+            "createDataTable": true
+          },
+          "has_error_handling": true,
+          "has_dom_ready": true
+        },
+        "Integration Tests": {
+          "file_size": 13016,
+          "content_checks": {
+            "class TawniaIntegrationTests": true,
+            "runTests": true,
+            "runTest": true,
+            "testNavigation": true,
+            "testComponents": true
+          },
+          "has_error_handling": true,
+          "has_dom_ready": false
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_name": "Service Worker Content Validation",
+      "status": "PASS",
+      "details": {
+        "Service Worker": {
+          "file_size": 3432,
+          "has_install_event": true,
+          "has_fetch_event": true,
+          "has_cache_strategy": true,
+          "pages_cached": {
+            "index.html": true,
+            "brainsait-enhanced.html": true,
+            "insurance_verification.html": true
+          },
+          "scripts_cached": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": true
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_name": "Security Content Validation",
+      "status": "WARN",
+      "details": {
+        "app.js": {
+          "has_sanitization": true,
+          "has_validation": false,
+          "no_eval_usage": true,
+          "no_innerhtml_direct": false,
+          "has_csp_compliance": true
+        },
+        "enhanced-app.js": {
+          "has_sanitization": true,
+          "has_validation": true,
+          "no_eval_usage": true,
+          "no_innerhtml_direct": false,
+          "has_csp_compliance": true
+        },
+        "tawnia-components.js": {
+          "has_sanitization": true,
+          "has_validation": false,
+          "no_eval_usage": true,
+          "no_innerhtml_direct": false,
+          "has_csp_compliance": true
+        },
+        "index.html_csp": {
+          "has_csp_meta": true
+        },
+        "brainsait-enhanced.html_csp": {
+          "has_csp_meta": true
+        },
+        "insurance_verification.html_csp": {
+          "has_csp_meta": true
+        }
+      },
+      "errors": [
+        "app.js uses direct innerHTML assignment",
+        "enhanced-app.js uses direct innerHTML assignment",
+        "tawnia-components.js uses direct innerHTML assignment"
+      ]
+    }
+  ],
+  "summary": {
+    "total_tests": 5,
+    "passed": 4,
+    "failed": 0,
+    "warnings": 1
+  },
+  "execution_time_seconds": 0.47,
+  "overall_status": "PASSED_WITH_WARNINGS"
+}

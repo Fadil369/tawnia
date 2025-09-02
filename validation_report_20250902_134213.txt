@@ -1,0 +1,56 @@
+================================================================================
+🏥 TAWNIA HEALTHCARE ANALYTICS - INTEGRATION VALIDATION REPORT
+================================================================================
+Timestamp: 2025-09-02T13:42:13.426908
+Project Directory: V:\NCCI Rejection\Khamis-hnh.jisr\July 2025\Tawnia-Analysis
+Execution Time: 0.51s
+Overall Status: FAILED
+
+📊 SUMMARY
+----------------------------------------
+Total Tests: 5
+✅ Passed: 2
+❌ Failed: 2
+⚠️  Warnings: 1
+
+📋 DETAILED RESULTS
+----------------------------------------
+✅ File Structure Validation: PASS
+
+❌ HTML Integration Validation: FAIL
+   - Portal missing script: tawnia-integration-tests.js
+   - Portal missing navigation container
+   - Analytics Dashboard missing script: tawnia-integration-tests.js
+   - Analytics Dashboard missing navigation container
+   - Insurance Verification missing script: tawnia-integration-tests.js
+   - Insurance Verification missing navigation container
+
+❌ JavaScript Content Validation: FAIL
+   - Navigation System missing: toggleLanguage
+   - Navigation System missing: toggleTheme
+   - Integration Tests missing: testNavigation
+   - Integration Tests missing: testComponents
+
+✅ Service Worker Content Validation: PASS
+
+⚠️ Security Content Validation: WARN
+   - app.js uses direct innerHTML assignment
+   - enhanced-app.js uses direct innerHTML assignment
+   - tawnia-components.js uses direct innerHTML assignment
+   - brainsait-enhanced.html missing CSP meta tag
+   - insurance_verification.html missing CSP meta tag
+
+💡 RECOMMENDATIONS
+----------------------------------------
+🔧 Please address the failed tests before deployment.
+📖 Refer to INTEGRATION-GUIDE.md for troubleshooting.
+
+🔧 NEXT STEPS
+----------------------------------------
+1. Start HTTP server: python -m http.server 8000
+2. Open browser: http://localhost:8000/public/
+3. Test navigation: Alt+1, Alt+2, Alt+3
+4. Run browser tests: Add ?test=true to any URL
+5. Check console for integration test results
+
+================================================================================

@@ -1,0 +1,232 @@
+{
+  "timestamp": "2025-09-02T13:42:13.426908",
+  "project_directory": "V:\\NCCI Rejection\\Khamis-hnh.jisr\\July 2025\\Tawnia-Analysis",
+  "tests": [
+    {
+      "test_name": "File Structure Validation",
+      "status": "PASS",
+      "details": {
+        "public/index.html": {
+          "exists": true,
+          "size_bytes": 22661,
+          "readable": true
+        },
+        "public/brainsait-enhanced.html": {
+          "exists": true,
+          "size_bytes": 49261,
+          "readable": true
+        },
+        "public/insurance_verification.html": {
+          "exists": true,
+          "size_bytes": 25943,
+          "readable": true
+        },
+        "public/sw.js": {
+          "exists": true,
+          "size_bytes": 3432,
+          "readable": true
+        },
+        "public/js/app.js": {
+          "exists": true,
+          "size_bytes": 44652,
+          "readable": true
+        },
+        "public/js/enhanced-app.js": {
+          "exists": true,
+          "size_bytes": 43733,
+          "readable": true
+        },
+        "public/js/tawnia-navigation.js": {
+          "exists": true,
+          "size_bytes": 18890,
+          "readable": true
+        },
+        "public/js/tawnia-components.js": {
+          "exists": true,
+          "size_bytes": 26287,
+          "readable": true
+        },
+        "public/js/tawnia-integration-tests.js": {
+          "exists": true,
+          "size_bytes": 11274,
+          "readable": true
+        },
+        "public/INTEGRATION-GUIDE.md": {
+          "exists": true,
+          "size_bytes": 9837,
+          "readable": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_name": "HTML Integration Validation",
+      "status": "FAIL",
+      "details": {
+        "Portal": {
+          "file_size": 22647,
+          "has_viewport_meta": true,
+          "has_csp_meta": true,
+          "scripts_integrated": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": false
+          },
+          "has_nav_container": false
+        },
+        "Analytics Dashboard": {
+          "file_size": 47861,
+          "has_viewport_meta": true,
+          "has_csp_meta": false,
+          "scripts_integrated": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": false
+          },
+          "has_nav_container": false
+        },
+        "Insurance Verification": {
+          "file_size": 24719,
+          "has_viewport_meta": true,
+          "has_csp_meta": false,
+          "scripts_integrated": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": false
+          },
+          "has_nav_container": false
+        }
+      },
+      "errors": [
+        "Portal missing script: tawnia-integration-tests.js",
+        "Portal missing navigation container",
+        "Analytics Dashboard missing script: tawnia-integration-tests.js",
+        "Analytics Dashboard missing navigation container",
+        "Insurance Verification missing script: tawnia-integration-tests.js",
+        "Insurance Verification missing navigation container"
+      ]
+    },
+    {
+      "test_name": "JavaScript Content Validation",
+      "status": "FAIL",
+      "details": {
+        "Navigation System": {
+          "file_size": 18238,
+          "content_checks": {
+            "class TawniaNavigation": true,
+            "keydown": true,
+            "navigateTo": true,
+            "toggleLanguage": false,
+            "toggleTheme": false
+          },
+          "has_error_handling": false,
+          "has_dom_ready": true
+        },
+        "Shared Components": {
+          "file_size": 25508,
+          "content_checks": {
+            "class TawniaComponents": true,
+            "showModal": true,
+            "showAlert": true,
+            "showToast": true,
+            "createDataTable": true
+          },
+          "has_error_handling": true,
+          "has_dom_ready": true
+        },
+        "Integration Tests": {
+          "file_size": 10929,
+          "content_checks": {
+            "class TawniaIntegrationTests": true,
+            "runTests": true,
+            "runTest": true,
+            "testNavigation": false,
+            "testComponents": false
+          },
+          "has_error_handling": true,
+          "has_dom_ready": false
+        }
+      },
+      "errors": [
+        "Navigation System missing: toggleLanguage",
+        "Navigation System missing: toggleTheme",
+        "Integration Tests missing: testNavigation",
+        "Integration Tests missing: testComponents"
+      ]
+    },
+    {
+      "test_name": "Service Worker Content Validation",
+      "status": "PASS",
+      "details": {
+        "Service Worker": {
+          "file_size": 3432,
+          "has_install_event": true,
+          "has_fetch_event": true,
+          "has_cache_strategy": true,
+          "pages_cached": {
+            "index.html": true,
+            "brainsait-enhanced.html": true,
+            "insurance_verification.html": true
+          },
+          "scripts_cached": {
+            "tawnia-navigation.js": true,
+            "tawnia-components.js": true,
+            "tawnia-integration-tests.js": true
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "test_name": "Security Content Validation",
+      "status": "WARN",
+      "details": {
+        "app.js": {
+          "has_sanitization": true,
+          "has_validation": false,
+          "no_eval_usage": true,
+          "no_innerhtml_direct": false,
+          "has_csp_compliance": true
+        },
+        "enhanced-app.js": {
+          "has_sanitization": true,
+          "has_validation": true,
+          "no_eval_usage": true,
+          "no_innerhtml_direct": false,
+          "has_csp_compliance": true
+        },
+        "tawnia-components.js": {
+          "has_sanitization": true,
+          "has_validation": false,
+          "no_eval_usage": true,
+          "no_innerhtml_direct": false,
+          "has_csp_compliance": true
+        },
+        "index.html_csp": {
+          "has_csp_meta": true
+        },
+        "brainsait-enhanced.html_csp": {
+          "has_csp_meta": false
+        },
+        "insurance_verification.html_csp": {
+          "has_csp_meta": false
+        }
+      },
+      "errors": [
+        "app.js uses direct innerHTML assignment",
+        "enhanced-app.js uses direct innerHTML assignment",
+        "tawnia-components.js uses direct innerHTML assignment",
+        "brainsait-enhanced.html missing CSP meta tag",
+        "insurance_verification.html missing CSP meta tag"
+      ]
+    }
+  ],
+  "summary": {
+    "total_tests": 5,
+    "passed": 2,
+    "failed": 2,
+    "warnings": 1
+  },
+  "execution_time_seconds": 0.51,
+  "overall_status": "FAILED"
+}

@@ -3,15 +3,22 @@
  * Provides offline capabilities and caching
  */
 
-const CACHE_NAME = 'tawnia-analytics-v2.0';
+const CACHE_NAME = 'tawnia-analytics-v2.1';
 const urlsToCache = [
     '/',
+    '/index.html',
     '/brainsait-enhanced.html',
+    '/insurance_verification.html',
     '/js/enhanced-app.js',
+    '/js/app.js',
+    '/js/tawnia-navigation.js',
+    '/js/tawnia-components.js',
+    '/js/tawnia-integration-tests.js',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap',
     'https://cdn.jsdelivr.net/npm/chart.js',
-    'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js'
+    'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
 ];
 
 // Install event - cache resources

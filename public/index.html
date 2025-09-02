@@ -3,10 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tawnia Healthcare Analytics</title>
-    <meta http-equiv="refresh" content="0; url=brainsait-enhanced.html">
+    <title>Tawnia Healthcare Analytics - Portal</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="Tawnia Healthcare Analytics Portal - Access advanced AI-powered healthcare data analysis and insurance verification systems">
+    <meta name="keywords" content="healthcare, analytics, insurance, verification, AI, NCCI, claims, data analysis">
+    <meta name="author" content="Tawnia Healthcare Analytics">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- External CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Color Palette */
+            --primary-color: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            
+            /* Background System */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #1a1f2e;
+            --bg-tertiary: #2d3748;
+            --bg-card: linear-gradient(145deg, #1a1f2e 0%, #2d3748 100%);
+            --bg-glass: rgba(26, 31, 46, 0.8);
+            
+            /* Typography */
+            --text-primary: #f8fafc;
+            --text-secondary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-accent: #60a5fa;
+            
+            /* Borders & Effects */
+            --border-color: rgba(148, 163, 184, 0.2);
+            --border-accent: rgba(59, 130, 246, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-glass: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(ellipse at top, #1a1f2e 0%, #0a0e1a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .portal-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .portal-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+        }
+
+        .portal-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .portal-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .portal-version {
+            display: inline-block;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-accent);
+            border-radius: 2rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: var(--text-accent);
+            margin-top: 1rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+
+        .app-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-accent);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-glass);
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-glow), var(--shadow-xl);
+            border-color: var(--primary-light);
+        }
+
+        .app-card:hover .app-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .app-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-glass);
+            opacity: 0.5;
+        }
+
+        .app-icon.primary {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .app-icon.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .app-icon.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .app-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .app-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .app-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .app-features i {
+            color: var(--success-color);
+            font-size: 0.75rem;
+        }
+
+        .app-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .app-button:hover::before {
+            left: 100%;
+        }
+
+        .app-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow), var(--shadow-xl);
+            filter: brightness(1.1);
+        }
+
+        .portal-footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            max-width: 800px;
+        }
+
+        .portal-footer h3 {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .feature-icon {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        .shortcut-key {
+            background: var(--bg-tertiary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-accent);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .portal-title {
+                font-size: 2rem;
+            }
+
+            .portal-subtitle {
+                font-size: 1rem;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .app-card {
+                padding: 2rem;
+            }
+
+            .logo-icon {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portal-container {
+                padding: 1rem;
+            }
+
+            .app-card {
+                padding: 1.5rem;
+            }
+
+            .app-icon {
+                width: 4rem;
+                height: 4rem;
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to <a href="brainsait-enhanced.html">Tawnia Healthcare Analytics</a>...</p>
+    <!-- Navigation Container -->
+    <div id="tawnia-navigation"></div>
+    
+    <div class="portal-container">
+        <!-- Portal Header -->
+        <header class="portal-header">
+            <div class="portal-logo">
+                <i class="fas fa-heartbeat logo-icon"></i>
+            </div>
+            <h1 class="portal-title">Tawnia Healthcare Analytics</h1>
+            <p class="portal-subtitle">
+                Advanced AI-powered healthcare data analysis platform with comprehensive insurance verification and claims processing capabilities
+            </p>
+            <div class="portal-version">
+                <i class="fas fa-rocket"></i>
+                Version 2.0 - Production Ready
+            </div>
+        </header>
+
+        <!-- Applications Grid -->
+        <main class="applications-grid">
+            <!-- Main Analytics Dashboard -->
+            <div class="app-card" onclick="window.location.href='brainsait-enhanced.html'">
+                <div class="app-icon primary">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2 class="app-title">Analytics Dashboard</h2>
+                <p class="app-description">
+                    Comprehensive healthcare data analysis with AI-powered insights, claim rejection analytics, and trend visualization.
+                </p>
+                <ul class="app-features">
+                    <li><i class="fas fa-check"></i> Real-time data processing</li>
+                    <li><i class="fas fa-check"></i> Interactive charts & graphs</li>
+                    <li><i class="fas fa-check"></i> AI-powered insights</li>
+                    <li><i class="fas fa-check"></i> Export capabilities</li>
+                    <li><i class="fas fa-check"></i> Drag & drop file upload</li>
+                </ul>
+                <a href="brainsait-enhanced.html" class="app-button">
+                    <i class="fas fa-arrow-right"></i>
+                    Launch Dashboard
+                </a>
+            </div>
+
+            <!-- Insurance Verification -->
+            <div class="app-card" onclick="window.location.href='insurance_verification.html'">
+                <div class="app-icon success">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="app-title">Insurance Verification</h2>
+                <p class="app-description">
+                    Nafath-integrated insurance eligibility verification system with bilingual support and real-time validation.
+                </p>
+                <ul class="app-features">
+                    <li><i class="fas fa-check"></i> Nafath integration</li>
+                    <li><i class="fas fa-check"></i> Bilingual interface (AR/EN)</li>
+                    <li><i class="fas fa-check"></i> Real-time verification</li>
+                    <li><i class="fas fa-check"></i> Excel file processing</li>
+                    <li><i class="fas fa-check"></i> Secure data handling</li>
+                </ul>
+                <a href="insurance_verification.html" class="app-button">
+                    <i class="fas fa-arrow-right"></i>
+                    Launch Verification
+                </a>
+            </div>
+        </main>
+
+        <!-- Portal Footer -->
+        <footer class="portal-footer">
+            <h3>Platform Features</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-lock feature-icon"></i>
+                    <span>Enterprise Security</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt feature-icon"></i>
+                    <span>Responsive Design</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-cloud feature-icon"></i>
+                    <span>Cloud Ready</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-globe feature-icon"></i>
+                    <span>Multi-language</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <span>High Performance</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-wifi feature-icon"></i>
+                    <span>Offline Support</span>
+                </div>
+            </div>
+
+            <div class="keyboard-shortcuts">
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-secondary);">
+                    <i class="fas fa-keyboard"></i> Keyboard Shortcuts
+                </h4>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <span>Dashboard</span>
+                        <kbd class="shortcut-key">Alt + 1</kbd>
+                    </div>
+                    <div class="shortcut-item">
+                        <span>Analytics</span>
+                        <kbd class="shortcut-key">Alt + 2</kbd>
+                    </div>
+                    <div class="shortcut-item">
+                        <span>Verification</span>
+                        <kbd class="shortcut-key">Alt + 3</kbd>
+                    </div>
+                    <div class="shortcut-item">
+                        <span>Language</span>
+                        <kbd class="shortcut-key">Ctrl + L</kbd>
+                    </div>
+                    <div class="shortcut-item">
+                        <span>Theme</span>
+                        <kbd class="shortcut-key">Ctrl + T</kbd>
+                    </div>
+                    <div class="shortcut-item">
+                        <span>Fullscreen</span>
+                        <kbd class="shortcut-key">F11</kbd>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; opacity: 0.7;">
+                Powered by <strong>BrainSAIT</strong> • Built with ❤️ for Healthcare Analytics
+                <br>
+                <small>© 2025 Tawnia Healthcare Analytics. All rights reserved.</small>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/tawnia-navigation.js"></script>
+    <script src="./js/tawnia-components.js"></script>
+    <script src="./js/tawnia-integration-tests.js"></script>
+    <script>
+        // Initialize portal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on load
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Add click handlers for card navigation
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const link = this.querySelector('a');
+                    if (link) {
+                        window.location.href = link.href;
+                    }
+                });
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.altKey && !e.ctrlKey && !e.shiftKey) {
+                    switch(e.key) {
+                        case '1':
+                            e.preventDefault();
+                            break; // Stay on portal
+                        case '2':
+                            e.preventDefault();
+                            window.location.href = 'brainsait-enhanced.html';
+                            break;
+                        case '3':
+                            e.preventDefault();
+                            window.location.href = 'insurance_verification.html';
+                            break;
+                    }
+                }
+            });
+
+            // Add hover effects
+            const appCards = document.querySelectorAll('.app-card');
+            appCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            console.log('🏠 Tawnia Portal initialized successfully');
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    console.log('✅ Service Worker registered:', registration);
+                })
+                .catch(error => {
+                    console.error('❌ Service Worker registration failed:', error);
+                });
+        }
+    </script>
 </body>
 </html>
