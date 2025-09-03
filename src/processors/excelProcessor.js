@@ -1,4 +1,4 @@
-const XLSX = require('xlsx');
+const xlsx = require('node-xlsx');
 const ExcelJS = require('exceljs');
 const moment = require('moment');
 const winston = require('winston');
