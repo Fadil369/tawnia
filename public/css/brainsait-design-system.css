@@ -1,0 +1,333 @@
+/*!
+ * BrainSAIT Design System for Tawnia Healthcare Analytics
+ * Enhanced design components for Saudi healthcare industry
+ * Version: 1.0.0 - Saudi/MENA Focus
+ */
+
+/* BrainSAIT Color Palette */
+:root {
+    /* Primary BrainSAIT Colors */
+    --brainsait-primary: #0066cc;        /* BrainSAIT Blue */
+    --brainsait-primary-dark: #004499;   /* Deep Blue */
+    --brainsait-primary-light: #3399ff;  /* Light Blue */
+    --brainsait-secondary: #00cc66;      /* BrainSAIT Green */
+    --brainsait-accent: #ff6600;         /* BrainSAIT Orange */
+    
+    /* Saudi National Colors */
+    --saudi-green: #006c35;              /* Saudi Flag Green */
+    --saudi-white: #ffffff;              /* Saudi Flag White */
+    --saudi-gold: #ffd700;               /* Saudi Gold */
+    
+    /* Healthcare Specific Colors */
+    --healthcare-blue: #4a90e2;          /* Medical Blue */
+    --healthcare-teal: #17a2b8;          /* Healthcare Teal */
+    --healthcare-success: #28a745;       /* Success Green */
+    --healthcare-warning: #ffc107;       /* Warning Amber */
+    --healthcare-danger: #dc3545;        /* Critical Red */
+    
+    /* BrainSAIT Gradients */
+    --brainsait-mesh-primary: linear-gradient(135deg, 
+        #0066cc 0%, #3399ff 25%, #00cc66 50%, #0066cc 75%, #004499 100%);
+    --brainsait-mesh-secondary: linear-gradient(45deg,
+        #006c35 0%, #00cc66 30%, #4a90e2 60%, #0066cc 100%);
+    --brainsait-mesh-subtle: linear-gradient(120deg,
+        rgba(0, 102, 204, 0.1) 0%, rgba(0, 204, 102, 0.1) 50%, rgba(255, 102, 0, 0.1) 100%);
+    
+    /* Dark Theme Extensions */
+    --brainsait-dark-bg: #0a1120;        /* Deep Dark Blue */
+    --brainsait-dark-surface: #1a2332;   /* Dark Surface */
+    --brainsait-dark-elevated: #2a3544;  /* Elevated Surface */
+    
+    /* Typography Sizes (Saudi Context) */
+    --text-xs: 0.75rem;    /* 12px */
+    --text-sm: 0.875rem;   /* 14px */
+    --text-base: 1rem;     /* 16px */
+    --text-lg: 1.125rem;   /* 18px */
+    --text-xl: 1.25rem;    /* 20px */
+    --text-2xl: 1.5rem;    /* 24px */
+    --text-3xl: 1.875rem;  /* 30px */
+    --text-4xl: 2.25rem;   /* 36px */
+    
+    /* Spacing System (8pt grid) */
+    --space-1: 0.25rem;    /* 4px */
+    --space-2: 0.5rem;     /* 8px */
+    --space-3: 0.75rem;    /* 12px */
+    --space-4: 1rem;       /* 16px */
+    --space-5: 1.25rem;    /* 20px */
+    --space-6: 1.5rem;     /* 24px */
+    --space-8: 2rem;       /* 32px */
+    --space-10: 2.5rem;    /* 40px */
+    --space-12: 3rem;      /* 48px */
+    --space-16: 4rem;      /* 64px */
+}
+
+/* BrainSAIT Typography System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+.brainsait-font-en {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+
+.brainsait-font-ar {
+    font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+
+/* BrainSAIT Mesh Gradient Backgrounds */
+.brainsait-mesh-hero {
+    background: var(--brainsait-mesh-primary);
+    background-size: 400% 400%;
+    animation: brainsaitMeshMove 20s ease infinite;
+}
+
+.brainsait-mesh-card {
+    background: var(--brainsait-mesh-secondary);
+    background-size: 200% 200%;
+    animation: brainsaitMeshMove 15s ease infinite;
+}
+
+.brainsait-mesh-subtle {
+    background: var(--brainsait-mesh-subtle);
+    background-size: 300% 300%;
+    animation: brainsaitMeshMove 25s ease infinite;
+}
+
+@keyframes brainsaitMeshMove {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 25%; }
+    50% { background-position: 100% 75%; }
+    75% { background-position: 0% 75%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* BrainSAIT Component System */
+.brainsait-card {
+    background: linear-gradient(145deg, 
+        rgba(26, 31, 46, 0.95) 0%, 
+        rgba(45, 55, 72, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 
+        0 8px 32px rgba(0, 102, 204, 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brainsait-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 16px 48px rgba(0, 102, 204, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    border-color: rgba(0, 102, 204, 0.3);
+}
+
+.brainsait-button-primary {
+    background: linear-gradient(135deg, var(--brainsait-primary) 0%, var(--brainsait-primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: var(--space-3) var(--space-6);
+    font-weight: 600;
+    font-size: var(--text-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 102, 204, 0.3);
+}
+
+.brainsait-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 102, 204, 0.4);
+    background: linear-gradient(135deg, var(--brainsait-primary-light) 0%, var(--brainsait-primary) 100%);
+}
+
+.brainsait-button-secondary {
+    background: linear-gradient(135deg, var(--brainsait-secondary) 0%, #00ff80 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: var(--space-3) var(--space-6);
+    font-weight: 600;
+    font-size: var(--text-base);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 204, 102, 0.3);
+}
+
+/* BrainSAIT Navigation Enhancement */
+.brainsait-nav {
+    background: linear-gradient(90deg, 
+        rgba(10, 17, 32, 0.95) 0%,
+        rgba(26, 35, 50, 0.9) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 102, 204, 0.2);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+}
+
+.brainsait-nav-item {
+    color: rgba(255, 255, 255, 0.8);
+    padding: var(--space-2) var(--space-4);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.brainsait-nav-item:hover {
+    color: white;
+    background: rgba(0, 102, 204, 0.1);
+    transform: translateY(-1px);
+}
+
+.brainsait-nav-item.active {
+    color: white;
+    background: linear-gradient(135deg, var(--brainsait-primary) 0%, var(--brainsait-primary-light) 100%);
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+}
+
+/* Saudi Healthcare Specific Enhancements */
+.saudi-healthcare-badge {
+    background: linear-gradient(135deg, var(--saudi-green) 0%, var(--brainsait-secondary) 100%);
+    color: white;
+    padding: var(--space-1) var(--space-3);
+    border-radius: 20px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.saudi-healthcare-badge::before {
+    content: "🇸🇦";
+    font-size: var(--text-sm);
+}
+
+/* NPHIES Integration Styling */
+.nphies-indicator {
+    background: linear-gradient(135deg, var(--saudi-green) 0%, var(--healthcare-teal) 100%);
+    color: white;
+    padding: var(--space-2) var(--space-4);
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 108, 53, 0.3);
+}
+
+/* Nafath Integration Styling */
+.nafath-badge {
+    background: linear-gradient(135deg, var(--saudi-green) 0%, var(--saudi-gold) 100%);
+    color: white;
+    padding: var(--space-2) var(--space-4);
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    box-shadow: 0 2px 8px rgba(0, 108, 53, 0.3);
+}
+
+.nafath-badge::before {
+    content: "🛡️";
+}
+
+/* Responsive Design for Arabic/RTL */
+[dir="rtl"] .brainsait-card {
+    text-align: right;
+}
+
+[dir="rtl"] .brainsait-nav-item {
+    margin-left: var(--space-2);
+    margin-right: 0;
+}
+
+/* BrainSAIT Loading Animation */
+.brainsait-loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(0, 102, 204, 0.1);
+    border-top: 4px solid var(--brainsait-primary);
+    border-radius: 50%;
+    animation: brainsaitSpin 1s linear infinite;
+    margin: var(--space-8) auto;
+}
+
+@keyframes brainsaitSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Healthcare Analytics Specific */
+.healthcare-metric-card {
+    background: linear-gradient(145deg, 
+        rgba(74, 144, 226, 0.1) 0%, 
+        rgba(23, 162, 184, 0.1) 100%);
+    border: 1px solid rgba(74, 144, 226, 0.2);
+    border-radius: 16px;
+    padding: var(--space-6);
+    transition: all 0.3s ease;
+}
+
+.healthcare-metric-card:hover {
+    border-color: rgba(74, 144, 226, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(74, 144, 226, 0.2);
+}
+
+/* BrainSAIT Success States */
+.brainsait-success {
+    background: linear-gradient(135deg, var(--healthcare-success) 0%, var(--brainsait-secondary) 100%);
+    color: white;
+}
+
+.brainsait-warning {
+    background: linear-gradient(135deg, var(--healthcare-warning) 0%, var(--brainsait-accent) 100%);
+    color: white;
+}
+
+.brainsait-danger {
+    background: linear-gradient(135deg, var(--healthcare-danger) 0%, #ff4757 100%);
+    color: white;
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+    .brainsait-mesh-hero,
+    .brainsait-mesh-card,
+    .brainsait-mesh-subtle {
+        animation: none;
+    }
+    
+    .brainsait-loader {
+        animation: none;
+        border: 4px solid var(--brainsait-primary);
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .brainsait-card {
+        border: 2px solid var(--brainsait-primary);
+        background: rgba(0, 0, 0, 0.9);
+    }
+    
+    .brainsait-nav {
+        background: #000;
+        border-bottom: 2px solid var(--brainsait-primary);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .brainsait-mesh-hero,
+    .brainsait-mesh-card,
+    .brainsait-mesh-subtle {
+        background: #fff !important;
+        color: #000 !important;
+    }
+    
+    .brainsait-card {
+        border: 1px solid #000;
+        background: #fff;
+        box-shadow: none;
+    }
+}

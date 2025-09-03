@@ -51,7 +51,7 @@ class ExcelProcessor {
       logger.info(`Processing file: ${filename}`);
 
       const fileType = this.identifyFileType(filename);
-      const workbook = XLSX.readFile(filePath);
+      const workbook = xlsx.parse(filePath);
 
       let processedData = {
         filename,
@@ -63,13 +63,10 @@ class ExcelProcessor {
       };
 
       // Process each sheet in the workbook
-      for (const sheetName of workbook.SheetNames) {
-        const worksheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, {
-          raw: false,
-          defval: null,
-          header: 1
-        });
+      for (let i = 0; i < workbook.length; i++) {
+        const sheet = workbook[i];
+        const sheetName = sheet.name || `Sheet${i + 1}`;
+        const jsonData = sheet.data;
 
         const processedSheet = await this.processSheet(jsonData, sheetName, fileType);
         processedData.sheets.push(processedSheet);

@@ -22,25 +22,29 @@
     <!-- External CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- BrainSAIT Design System -->
+    <link href="css/brainsait-design-system.css" rel="stylesheet">
 
     <style>
         :root {
-            /* Color Palette */
-            --primary-color: #3b82f6;
-            --primary-dark: #1d4ed8;
-            --primary-light: #60a5fa;
-            --secondary-color: #64748b;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --info-color: #06b6d4;
+            /* BrainSAIT Color Palette - Override */
+            --primary-color: var(--brainsait-primary, #0066cc);
+            --primary-dark: var(--brainsait-primary-dark, #004499);
+            --primary-light: var(--brainsait-primary-light, #3399ff);
+            --secondary-color: var(--brainsait-secondary, #00cc66);
+            --success-color: var(--healthcare-success, #28a745);
+            --warning-color: var(--healthcare-warning, #ffc107);
+            --danger-color: var(--healthcare-danger, #dc3545);
+            --info-color: var(--healthcare-teal, #17a2b8);
             
-            /* Background System */
-            --bg-primary: #0a0e1a;
-            --bg-secondary: #1a1f2e;
-            --bg-tertiary: #2d3748;
-            --bg-card: linear-gradient(145deg, #1a1f2e 0%, #2d3748 100%);
-            --bg-glass: rgba(26, 31, 46, 0.8);
+            /* Background System - Enhanced */
+            --bg-primary: var(--brainsait-dark-bg, #0a1120);
+            --bg-secondary: var(--brainsait-dark-surface, #1a2332);
+            --bg-tertiary: var(--brainsait-dark-elevated, #2a3544);
+            --bg-card: linear-gradient(145deg, var(--brainsait-dark-surface) 0%, var(--brainsait-dark-elevated) 100%);
+            --bg-glass: rgba(26, 35, 50, 0.8);
             
             /* Typography */
             --text-primary: #f8fafc;
@@ -585,9 +589,13 @@
             </div>
 
             <p style="margin-top: 2rem; opacity: 0.7;">
-                Powered by <strong>BrainSAIT</strong> • Built with ❤️ for Healthcare Analytics
+                <span class="saudi-healthcare-badge">🇸🇦 نصنع المستقبل معاً</span>
+                <br><br>
+                Powered by <strong>BrainSAIT</strong> • AI-Enhanced Healthcare Analytics Platform
                 <br>
-                <small>© 2025 Tawnia Healthcare Analytics. All rights reserved.</small>
+                <span class="nphies-indicator">NPHIES Ready</span> • <span class="nafath-badge">نافذ Integrated</span>
+                <br>
+                <small>© 2025 Tawnia Healthcare Analytics - BrainSAIT Enterprise Solution. All rights reserved.</small>
             </p>
         </footer>
     </div>
