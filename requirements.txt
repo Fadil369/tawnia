@@ -50,7 +50,7 @@ python-magic==0.4.27
 Pillow==10.4.0
 
 # Monitoring & Performance
-psutil==6.0.0
+psutil==7.1.2
 prometheus-client==0.21.0
 
 # Testing - Latest Secure
